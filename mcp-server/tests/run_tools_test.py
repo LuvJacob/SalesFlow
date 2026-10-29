@@ -43,7 +43,7 @@ def is_error(r: dict, status: str) -> bool:
 async def main() -> None:
     async with Client(mcp) as c:
         tools = sorted(t.name for t in await c.list_tools())
-        expected = sorted(["ping", "get_account_profile", "get_opportunity_context", "search_product_knowledge", "get_sales_playbook"])
+        expected = sorted(["ping", "get_account_profile", "get_opportunity_context", "search_product_knowledge", "get_sales_playbook", "generate_sales_brief_document"])
         record("tool list", tools == expected, str(tools))
 
         r = await call(c, "ping", {})
