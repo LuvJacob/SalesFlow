@@ -68,6 +68,12 @@ Full contract: [`docs/contracts/mcp-tools.md`](docs/contracts/mcp-tools.md).
 
 `generate_sales_brief_document(brief_data)` creates a Word (`.docx`) meeting brief in `outputs/`. It runs only when the seller explicitly asks for a document, and it never writes outside `outputs/`. Rules: `.bob/rules-salesflow/01-routing.md`. Tests: `mcp-server/tests/test_docx_export.py`.
 
+### Scheduled pipeline briefings (write tools, local state only)
+
+Five tools (`create_pipeline_schedule`, `list_pipeline_schedules`, `update_pipeline_schedule`, `run_pipeline_review`, `get_latest_pipeline_digest`) let a seller set up a recurring pipeline risk review ("every Monday at 8 AM Eastern") that reuses the deal-risk engine. Creating, pausing, resuming or cancelling a schedule needs explicit seller approval (two-step confirmation token). A separate local process, `salesflow-scheduler`, runs the schedules from a SQLite store and saves a Markdown and JSON digest that Bob retrieves on request.
+
+Limits, stated plainly: a local scheduler only runs while the host machine and the scheduler process are running; Bob is not notified; nothing is sent by email or Slack. Try it without waiting for Monday: `cd mcp-server && uv run salesflow-scheduler demo`. Setup and lifecycle: [`docs/scheduled-briefings.md`](docs/scheduled-briefings.md). Tests: `mcp-server/tests/test_scheduler.py`.
+
 ### Mock CRM (separate server, pending review)
 
 `mock-crm/` is a second read-only MCP server that answers CRM-style questions such as opportunity counts and close dates (`crm_list_opportunities`, `crm_search_accounts`, `crm_pipeline_summary`). It is in pull request #4 and is **not on `main` yet**. See `mock-crm/README.md` once merged.
@@ -146,6 +152,7 @@ Standalone web UI, multiagent orchestration, live CRM or IBM systems, customer e
 - [`Team_Lanes.md`](Team_Lanes.md): sprint plan, lanes, and definition of done
 - [`docs/setup.md`](docs/setup.md): MCP setup and troubleshooting
 - [`docs/contracts/mcp-tools.md`](docs/contracts/mcp-tools.md): tool contract
+- [`docs/scheduled-briefings.md`](docs/scheduled-briefings.md): scheduled pipeline briefings setup, lifecycle, limits
 - [`docs/demo-script.md`](docs/demo-script.md): five-minute demo
 - [`docs/submission.md`](docs/submission.md): submission checklist
 - [IBM Bob custom modes](https://bob.ibm.com/docs/ide/configuration/custom-modes)

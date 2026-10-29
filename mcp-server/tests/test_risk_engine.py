@@ -177,7 +177,7 @@ async def main() -> None:
             "mcp get_at_risk_deals",
             r["status"] == "ok"
             and isinstance(r["data"]["deals"], list)
-            and r["data"]["count"] == 5  # We have 5 mock opportunities in our opportunities.json
+            and r["data"]["count"] == 6  # We have 6 mock opportunities in our opportunities.json
             and r["data"]["deals"][0]["risk_score"] >= r["data"]["deals"][-1]["risk_score"],  # Sorted desc
             f"count={r['data']['count']} highest_score={r['data']['deals'][0]['risk_score']} lowest_score={r['data']['deals'][-1]['risk_score']}"
         )
@@ -212,8 +212,8 @@ async def main() -> None:
         record(
             "mcp get_pipeline_summary",
             r_summary["status"] == "ok"
-            and r_summary["data"]["total_deals"] == 5
-            and r_summary["data"]["total_value"] == 1050000.0  # 150k + 250k + 180k + 420k + 50k
+            and r_summary["data"]["total_deals"] == 6
+            and r_summary["data"]["total_value"] == 1250000.0  # 150k + 200k + 250k + 180k + 420k + 50k
             and "risk_distribution" in r_summary["data"]
             and r_summary["data"]["risk_distribution"]["high_risk"]["count"] >= 1
             and len(r_summary["data"]["top_risk_factors"]) > 0,
