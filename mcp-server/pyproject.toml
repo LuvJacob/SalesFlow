@@ -5,6 +5,7 @@ description = "SalesFlow read-only MCP server (synthetic sales data) for IBM Bob
 requires-python = ">=3.10"
 dependencies = [
     "fastmcp",
+    "python-docx>=1.1.2",
 ]
 
 [project.scripts]
