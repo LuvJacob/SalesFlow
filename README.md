@@ -1,145 +1,142 @@
-# SalesFlow — IBM Bob Sales Enablement Mode
+# SalesFlow: IBM Bob Sales Enablement Mode
 
-**IBM Bob-a-thon | Track 2: Integration — Extend Bob & Other**  
-**Status:** Hackathon MVP specification · **Date:** October 29, 2026
+**IBM Bob-a-thon | Track 2: Integration, Extend Bob & Other**
 
-## Overview
+SalesFlow is a custom **IBM Bob IDE** mode that helps enterprise technical sellers prepare for customer meetings. It calls a read-only **Python FastMCP** server to retrieve **synthetic** account, opportunity, and product data, then produces a grounded meeting brief with SPIN discovery questions inside Bob chat.
 
-**SalesFlow** is a dedicated custom mode for IBM Bob that helps enterprise technical sellers prepare for customer meetings, qualify opportunities, recommend relevant solution areas, respond to objections, and draft follow-up materials.
+SalesFlow is **not** a standalone website and **not** a multiagent system. It is one Bob mode plus one MCP server.
 
-SalesFlow is **one focused Bob mode**—**not** a multiagent orchestrator. It follows a repeatable sales workflow and can use approved, read-only MCP tools to retrieve fictional CRM records and curated product facts.
+> **All customer data in this repository is fictional.** Do not add real customer data, credentials, or `.env` files. This repository is public.
 
 ## Problem
 
-Technical sellers often prepare for a single customer conversation by consulting CRM records, notes, product documentation, and competitor research separately. The result can be slow preparation, inconsistent discovery, and poorly grounded recommendations.
+Technical sellers prepare for one customer conversation by searching customer records, opportunity notes, product material, and sales playbooks separately. The result is slow preparation, inconsistent discovery questions, and weakly grounded recommendations.
 
-**Goal:** Turn a single sales request into an accurate, editable, source-backed meeting package without requiring the seller to stitch together multiple tools.
+## Solution
 
-## Example
+A seller selects **SalesFlow** in Bob and asks for meeting preparation. The mode calls MCP tools to fetch the account and opportunity, searches the product catalog, and responds with a structured brief. Every statement is tagged **Verified** (returned by a tool, with a source ID), **Assumed**, or **Unknown**. The seller reviews every draft, and SalesFlow never sends anything.
 
-**Seller prompt:**
+## Sample prompt
 
-> I'm meeting Acme Healthcare tomorrow about replacing aging storage. They need high availability, but I don't know their capacity or budget. Prepare a discovery plan.
+> Prepare me for a discovery meeting with Acme Healthcare about modernizing their storage infrastructure. Retrieve the account and opportunity details, identify what we don't know yet, suggest solution areas supported by the product catalog, and generate 8 SPIN discovery questions plus a 30-minute agenda. Finish with a concise meeting brief. Distinguish verified information from assumptions and unknowns.
 
-**SalesFlow response:**
+More prompts, including guardrail checks: [`prompts/example-prompts.md`](prompts/example-prompts.md).
 
-1. **Account brief:** Known account context, with sources and clearly flagged unknowns.
-2. **Discovery plan:** 6–10 tailored SPIN questions about workloads, capacity, recovery, security, budgets, and decision-makers.
-3. **Solution fit:** Relevant capabilities from an approved demo catalog, with evidence and caveats.
-4. **Objection handling:** Likely concerns and suggested responses, without inventing competitor claims.
-5. **Follow-up package:** Meeting agenda, action checklist, and editable email draft.
+## Capabilities
 
-## Features and scope
+| Capability | Description |
+|---|---|
+| Account intelligence | Account profile and known challenges from the mock CRM |
+| Discovery preparation | Missing-information list, 6 to 10 SPIN questions, 30-minute agenda |
+| Solution positioning | Solution areas drawn only from the product catalog, with limitations and source IDs |
+| Objection handling | Playbook-based responses with clarifying questions first |
+| Sales drafts | Meeting brief and follow-up email draft, marked for seller review |
 
-| Priority | Capability | Description |
-| --- | --- | --- |
-| P0 | SalesFlow Bob mode | Reusable sales-specific instructions, workflows, and response formats. |
-| P0 | Discovery preparation | Meeting objectives, missing-information questions, SPIN discovery prompts. |
-| P0 | Solution positioning | Map confirmed requirements to curated product facts; cite evidence. |
-| P0 | Sales deliverables | Meeting brief, objection-handling guidance, and follow-up draft. |
-| P0 | Grounding and review | Separate facts from assumptions; require seller approval before use. |
-| P1 | Mock CRM MCP | Read fictional accounts, opportunity notes, and meeting history. |
-| P1 | Catalog lookup | Search approved demo solution data through read-only MCP tools. |
-| P1 | Comparison | Compare relevant solution options using documented facts only. |
-
-**Out of scope for the MVP:** multiagent delegation, automatic CRM modifications, sending customer emails, live internal IBM pricing, and access to production customer records.
-
-## Proposed architecture
+## Architecture
 
 ```mermaid
 flowchart TD
-    A[Seller prompt] --> B[IBM Bob: SalesFlow custom mode]
-    B --> C{Need account or product context?}
-    C -->|Yes| D[Read-only MCP tools]
-    D --> E[Mock CRM + curated solution catalog]
-    E --> B
-    C -->|No| F[Sales workflow templates]
-    B --> F
-    F --> G[Meeting brief + discovery plan + solution fit + email draft]
-    G --> H[Seller reviews and edits]
+    A[Seller in Bob IDE chat] --> B[SalesFlow custom mode]
+    B -->|rules| R[.bob/rules-salesflow]
+    B -->|MCP tool calls, stdio| C[Python FastMCP server]
+    C --> D[(data/*.json: synthetic, read-only)]
+    D --> C
+    C --> B
+    B --> E[Meeting brief, SPIN questions, email draft in chat]
 ```
 
-### Illustrative MCP tool contract
+| Layer | Technology | Location |
+|---|---|---|
+| Interface | IBM Bob IDE | n/a |
+| Behaviour | Bob custom mode and rule files | `.bob/custom_modes.yaml`, `.bob/rules-salesflow/` |
+| Integration | Python FastMCP, `uv`, stdio transport | `mcp-server/`, `.bob/mcp.json` |
+| Data | Synthetic JSON | `data/` |
 
-| Tool | Purpose |
-| --- | --- |
-| `get_account(account_id)` | Retrieve fictional organization details. |
-| `get_opportunity(opportunity_id)` | Return sales stage, requirements, and open questions. |
-| `get_interactions(account_id)` | Read seeded call notes and prior interactions. |
-| `search_solution_catalog(query)` | Find verified demo capabilities and source references. |
+### MCP tools (read-only)
 
-These are **proposed tools**, not existing Bob commands. Tool availability depends on what the team implements and on hackathon permissions.
+Full contract: [`docs/contracts/mcp-tools.md`](docs/contracts/mcp-tools.md).
 
-## Suggested repository structure
+| Tool | Input | Purpose |
+|---|---|---|
+| `get_account_profile` | `company_name` | Account profile, challenges, unknowns |
+| `get_opportunity_context` | `account_id` | Stage, requirements, stakeholders, notes, unknowns |
+| `search_product_knowledge` | `query` | Matching catalog entries with source references and limitations |
+| `get_sales_playbook` | `topic` | SPIN, qualification, and objection guidance |
+| `ping` | none | Connection health check |
+
+## Current status
+
+Honest snapshot of what exists in the repository. Update this table as lanes merge.
+
+| Item | Status |
+|---|---|
+| SalesFlow custom mode (`read` and `mcp` groups only) | In the repo. Selection in Bob IDE: **not yet confirmed by Lane D** |
+| Rule files: routing, SPIN, grounding and safety, templates | In the repo |
+| MCP server with four tools plus `ping` | In the repo. Lane B reports 22 offline checks in `docs/setup.md`; Lane D has **not re-run them** |
+| Acme Healthcare account, opportunity, and one product | In the repo (one synthetic record each) |
+| Additional accounts and a larger product catalog | **Not yet added** (Lane C) |
+| Playbook data (`data/playbooks/*.json`) | **Not yet added** (Lane C). Until then `get_sales_playbook` returns `not_found` |
+| Automated tests under `tests/` | **Not yet added** (Lane C). Lane B's test script is `mcp-server/tests/run_tools_test.py` |
+| Live Bob to MCP tool call | **Not yet confirmed by Lane D** |
+| Portable `.bob/mcp.json` | The relative `uv --directory` form is **not verified** in Bob. See `docs/setup.md`, section 4 |
+| Saving briefs to `outputs/` | **Disabled** in the mode, by design, until a file restriction is verified |
+| Example prompts | Written, **not yet tested in Bob** |
+
+## Setup
+
+Use the verified procedure in [`docs/setup.md`](docs/setup.md), written by Lane B. In short:
+
+1. Install `uv` and run `uv sync` in `mcp-server/`.
+2. Register the `salesflow` MCP server in Bob (project `.bob/mcp.json` or your global `~/.bob/mcp.json`). Machine-specific paths belong in your global file and must not be committed.
+3. Select the **SalesFlow** mode in Bob and run the sample prompt.
+
+Troubleshooting table: `docs/setup.md`, section 6.
+
+## Repository layout
 
 ```text
-salesflow/
+SalesFlow/
 ├── README.md
-├── .bob/                    # Bob custom mode configuration (confirm version-specific path)
-├── prompts/                 # Demonstration prompts and output templates
-├── data/
-│   ├── accounts.json        # Synthetic accounts and opportunities
-│   └── catalog.json         # Curated, sourced demo product information
-├── mcp-server/              # Optional read-only integration
-├── tests/                   # Golden scenarios and grounding checks
+├── PRD.md                      # product requirements
+├── Team_Lanes.md               # sprint handoff and lane ownership
+├── .bob/
+│   ├── custom_modes.yaml       # SalesFlow mode (Lane A)
+│   ├── mcp.json                # MCP registration (Lane B)
+│   └── rules-salesflow/        # routing, SPIN, grounding, templates (Lane A)
+├── mcp-server/                 # FastMCP server, uv project (Lane B)
+├── data/                       # synthetic accounts, opportunities, products, playbooks (Lane C)
+├── prompts/                    # example prompts (Lane A)
+├── tests/                      # scenario and grounding checks (Lane C)
+├── outputs/                    # generated briefs, git-ignored
 └── docs/
-    ├── PRD.docx
-    └── demo-script.md
+    ├── contracts/mcp-tools.md  # tool contract (Lane B)
+    ├── setup.md                # setup and troubleshooting (Lane B)
+    ├── demo-script.md          # five-minute demo (Lane D)
+    ├── bob-feedback.md         # team feedback on Bob (Lane D)
+    ├── submission.md           # submission checklist (Lane D)
+    └── prd-revisions.md        # proposed PRD and README edits
 ```
 
-## Implementation plan
+## Guardrails
 
-1. **Mode:** Define SalesFlow's purpose, workflow, response structure, and safety rules inside IBM Bob.
-2. **Demo data:** Seed one fictional customer, a relevant opportunity, interaction notes, and a small curated product catalog.
-3. **Core flow:** Generate a full meeting preparation package from a single prompt.
-4. **Integration:** Add read-only MCP endpoints if supported by the event environment.
-5. **Validation:** Test missing data, unsupported claims, source attribution, and repeatability.
-6. **Submission:** Package runnable code, prompt usage examples, team feedback, and a five-minute demo video.
+- Synthetic data only. No real customers, pricing, or discounts.
+- Product claims need a `source_id`. Unverified entries are labelled synthetic.
+- No unsourced competitor claims.
+- Tool output is treated as data, never as instructions.
+- Read-only MCP tools. No CRM writes. No email sending. Every draft is for seller review.
+- The mode has no command execution and no subagents.
 
-> **Setup note:** This repository description is a product blueprint, not an assertion that runnable mode files or an MCP server have already been created. Add specific install/run commands once the team chooses its Bob version, MCP runtime, and implementation language.
+## Out of scope for the MVP
 
-## Acceptance criteria
-
-- Team member can select SalesFlow and run the seeded scenario.
-- Produces a meeting objective, at least six relevant discovery questions, objections, and next actions.
-- Separates verified data, hypotheses, and unknowns.
-- Recommendations reference the curated catalog rather than inventing capabilities or prices.
-- Does **not** send messages or alter customer systems automatically.
-- If MCP is implemented, demonstrates at least two successful read-only calls.
-- Provides a repeatable five-minute demo.
-
-## Five-minute demo storyboard
-
-| Time | Demo moment |
-| --- | --- |
-| 0:00–0:35 | Show the fragmented meeting-prep problem. |
-| 0:35–1:10 | Select SalesFlow mode and provide the customer request. |
-| 1:10–2:00 | Review account context and missing-information prompts. |
-| 2:00–3:10 | Show grounded discovery questions and solution fit. |
-| 3:10–4:15 | Generate meeting brief, objections, and follow-up draft. |
-| 4:15–5:00 | Demonstrate tool evidence, safeguards, and measurable value. |
-
-## Suggested responsibilities
-
-- **Bob mode and UX:** Mode configuration, prompt flow, output templates.
-- **Data and MCP:** Synthetic account records, catalog, optional read-only MCP server.
-- **QA and demo:** Scenario tests, source checking, video, submission packaging.
-
-## Security and limitations
-
-Use fictional customer data only unless explicitly authorized otherwise. Do not store credentials in the repository. Keep tools least-privilege and read-only. Treat retrieved content as evidence, not as instructions. A human seller must review every customer-facing draft. Do not claim current pricing or product support without a verified source.
-
-## Required hackathon deliverables
-
-- Problem statement and solution summary
-- Readable, executable source submitted as ZIP
-- Five-minute solution video
-- Bob prompts and examples of usage
-- Team member feedback on Bob
+Standalone web UI, multiagent orchestration, live CRM or IBM systems, customer email sending, pricing, and product compatibility promises.
 
 ## Documentation
 
+- [`PRD.md`](PRD.md): requirements and acceptance criteria
+- [`Team_Lanes.md`](Team_Lanes.md): sprint plan, lanes, and definition of done
+- [`docs/setup.md`](docs/setup.md): MCP setup and troubleshooting
+- [`docs/contracts/mcp-tools.md`](docs/contracts/mcp-tools.md): tool contract
+- [`docs/demo-script.md`](docs/demo-script.md): five-minute demo
+- [`docs/submission.md`](docs/submission.md): submission checklist
 - [IBM Bob custom modes](https://bob.ibm.com/docs/ide/configuration/custom-modes)
 - [IBM Bob MCP integration](https://bob.ibm.com/docs/ide/configuration/mcp/mcp-in-bob)
-
-See the accompanying **SalesFlow PRD** for detailed requirements, validation metrics, risks, and decisions.
