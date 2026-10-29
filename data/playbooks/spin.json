@@ -1,0 +1,51 @@
+{
+  "topic": "spin",
+  "title": "SPIN Selling",
+  "synthetic": true,
+  "source_id": "src_playbook_spin_001",
+  "guidance": {
+    "overview": "SPIN Selling (Rackham, 1988) is a research-backed discovery methodology. Questions move from establishing facts, through uncovering problems and their consequences, to getting the customer to articulate the value of solving them.",
+    "question_types": {
+      "situation": {
+        "purpose": "Establish the customer's current environment and context. Use sparingly — ask only what you cannot confirm from CRM records.",
+        "examples": [
+          "How is your storage infrastructure currently organised across your sites?",
+          "What systems depend on your primary storage arrays today?",
+          "How do you currently handle data backups and replication?"
+        ]
+      },
+      "problem": {
+        "purpose": "Uncover difficulties, dissatisfaction, and risks the customer is experiencing.",
+        "examples": [
+          "What challenges are you running into with your current storage environment?",
+          "Which systems are most at risk if a storage array becomes unavailable?",
+          "How difficult is it to predict when your current arrays will reach end of support?"
+        ]
+      },
+      "implication": {
+        "purpose": "Draw out the business, operational, or financial consequences of the stated problems.",
+        "examples": [
+          "If a storage failure affected clinical systems during peak hours, what would the operational impact be?",
+          "How does unpredictable storage capacity affect your ability to plan IT budgets?",
+          "What happens to compliance obligations if patient data becomes inaccessible?"
+        ]
+      },
+      "need_payoff": {
+        "purpose": "Get the customer to express the value of solving the problem in their own words.",
+        "examples": [
+          "If you had a storage platform with guaranteed high availability, how would that change your team's day-to-day operations?",
+          "What would it mean for your organisation to eliminate unplanned storage downtime?",
+          "How important is it to have a clear recovery-time target for your clinical systems?"
+        ]
+      }
+    },
+    "guidelines": [
+      "Keep Situation questions brief — do not ask what the CRM already tells you.",
+      "Use Problem questions to find pain the customer may not have fully articulated.",
+      "Implication questions are the most powerful — link the problem to business impact before presenting solutions.",
+      "Need-Payoff questions should come after Implication; let the customer state the value, do not state it for them.",
+      "Aim for 6–10 questions total; balance across all four types.",
+      "Never lead a question towards a specific product or price."
+    ]
+  }
+}

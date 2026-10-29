@@ -1,0 +1,39 @@
+{
+  "topic": "objection_pricing",
+  "title": "Objection Handling: Pricing",
+  "synthetic": true,
+  "source_id": "src_playbook_obj_pricing_001",
+  "guidance": {
+    "overview": "Pricing objections are often about perceived value, incomplete comparisons, or budget constraints — not just the number. Clarify before responding. Never quote, estimate, or compare prices.",
+    "clarify_first": [
+      "What are you comparing our solution to — a specific competitor, your current spend, or an internal budget cap?",
+      "Is the concern about total cost of ownership, upfront spend, or something else?",
+      "What would the right investment look like if the solution fully solved the problem you described?"
+    ],
+    "acknowledge": "That is a fair concern — cost is always an important factor in a decision like this, and I want to make sure any comparison is accurate.",
+    "response_points": [
+      {
+        "point": "Scope the comparison correctly",
+        "detail": "Ensure the customer is comparing equivalent functionality — HA, support tier, and lifecycle costs — not just headline price.",
+        "label": "Assumed — confirm scope with customer"
+      },
+      {
+        "point": "Focus on value drivers stated by the customer",
+        "detail": "Return to the business impact they described — unplanned downtime, compliance risk, staff time. Ask what solving those problems is worth to them.",
+        "label": "Use customer's own words from discovery"
+      },
+      {
+        "point": "Explore total cost of inaction",
+        "detail": "Ask what the cost of the current situation is — support renewals on aging hardware, risk exposure, manual workarounds.",
+        "label": "Assumed — validate with customer"
+      }
+    ],
+    "reframe": "Instead of defending a price you cannot confirm, ask: 'What outcome would justify the investment for your leadership team?'",
+    "propose_next_step": "Offer to bring in the right commercial team to discuss options formally once the technical fit is confirmed.",
+    "do_not_say": [
+      "Any specific price, discount percentage, or ROI estimate.",
+      "Statements comparing our price to a named competitor.",
+      "Promises about future pricing or special deals."
+    ]
+  }
+}

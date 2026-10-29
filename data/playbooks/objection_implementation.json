@@ -1,0 +1,39 @@
+{
+  "topic": "objection_implementation",
+  "title": "Objection Handling: Implementation Risk",
+  "synthetic": true,
+  "source_id": "src_playbook_obj_impl_001",
+  "guidance": {
+    "overview": "Implementation objections reflect concern about disruption, migration complexity, resource requirements, or timeline. Validate the concern, surface the specifics, and propose a structured path forward.",
+    "clarify_first": [
+      "What aspect of the implementation are you most concerned about — the migration itself, the downtime window, the internal resources needed, or something else?",
+      "Have you been through a storage migration before? What made it difficult?",
+      "What constraints does your team have — timeline, staffing, change-control windows?"
+    ],
+    "acknowledge": "Implementation risk is real, and it is one of the most important things to plan carefully in a project like this.",
+    "response_points": [
+      {
+        "point": "Acknowledge the complexity honestly",
+        "detail": "Do not minimise migration risk. Validate that it requires planning, testing, and the right expertise.",
+        "label": "Standard guidance"
+      },
+      {
+        "point": "Reference support and services where verified",
+        "detail": "If the product data includes professional services, migration support, or phased cutover capabilities, reference them with the source ID.",
+        "label": "Verified — cite source_id from tool result if available"
+      },
+      {
+        "point": "Propose a structured evaluation",
+        "detail": "Suggest a detailed scoping conversation with the technical team to map out the migration approach before the customer commits.",
+        "label": "Standard guidance — no commitment implied"
+      }
+    ],
+    "reframe": "Ask what a low-risk implementation would look like to the customer. This surfaces their real constraints and opens a conversation about phased approaches.",
+    "propose_next_step": "Offer an implementation scoping call with a technical architect or professional services team.",
+    "do_not_say": [
+      "Claims that the migration is simple or risk-free.",
+      "Timelines or resource estimates without a formal scoping exercise.",
+      "Promises about zero downtime without a verified source."
+    ]
+  }
+}
