@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "salesflow": {
+      "command": "uv",
+      "args": ["run", "--directory", "mcp-server", "salesflow-mcp"]
+    }
+  }
+}

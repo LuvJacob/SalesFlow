@@ -1,0 +1,26 @@
+{
+  "_meta": {
+    "synthetic": true,
+    "note": "All records are fictional. Lane C owns and will expand this file."
+  },
+  "opportunities": [
+    {
+      "opportunity_id": "opp_acme_storage_01",
+      "account_id": "acct_acme_healthcare",
+      "synthetic": true,
+      "name": "Acme Healthcare storage modernization",
+      "stage": "Discovery",
+      "requirements": [
+        "Replace aging storage",
+        "High availability",
+        "Disaster recovery"
+      ],
+      "stakeholders": [
+        {"role": "Director of Infrastructure", "name": "Synthetic Contact A"}
+      ],
+      "notes": ["Initial inquiry received; no prior discovery meeting held."],
+      "unknowns": ["budget", "decision maker", "usable capacity"],
+      "source_id": "src_crm_opp_acme_001"
+    }
+  ]
+}

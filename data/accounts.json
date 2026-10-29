@@ -1,0 +1,21 @@
+{
+  "_meta": {
+    "synthetic": true,
+    "note": "All records are fictional. Lane C owns and will expand this file."
+  },
+  "accounts": [
+    {
+      "account_id": "acct_acme_healthcare",
+      "name": "Acme Healthcare",
+      "synthetic": true,
+      "industry": "Healthcare",
+      "overview": "Fictional regional healthcare network with hospitals and outpatient clinics.",
+      "challenges": [
+        "Aging on-premises storage arrays approaching end of support",
+        "Need for high availability for clinical systems"
+      ],
+      "unknowns": ["annual IT budget", "total usable storage capacity"],
+      "source_id": "src_crm_acme_001"
+    }
+  ]
+}

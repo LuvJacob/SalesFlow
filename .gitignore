@@ -1,0 +1,29 @@
+# Python / uv
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+# uv.lock is intentionally NOT ignored: commit it for reproducible installs.
+
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Node (not used by the MVP, excluded defensively)
+node_modules/
+
+# Generated sales briefs: keep the folder, ignore its contents
+outputs/*
+!outputs/.gitkeep
+
+# NOTE: .bob/ is shared project configuration and must stay tracked.

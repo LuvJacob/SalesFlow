@@ -1,0 +1,20 @@
+{
+  "_meta": {
+    "synthetic": true,
+    "note": "Starter fixture only. Entries are SYNTHETIC and UNVERIFIED placeholders, not statements of real IBM product capabilities. Lane C must replace them with entries that carry a real source_url and verified_date before they are presented as product facts."
+  },
+  "products": [
+    {
+      "product_id": "prod_storage_01",
+      "name": "Example Enterprise Storage Platform (synthetic)",
+      "synthetic": true,
+      "category": "storage",
+      "summary": "Placeholder entry for a block storage platform aimed at high availability.",
+      "capabilities": ["High availability (placeholder)", "Disaster recovery support (placeholder)"],
+      "limitations": ["Unverified; do not present as a real product capability"],
+      "source_id": "src_prod_synthetic_001",
+      "source_url": null,
+      "verified_date": null
+    }
+  ]
+}

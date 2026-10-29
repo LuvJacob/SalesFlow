@@ -1,0 +1,18 @@
+# SalesFlow custom mode: PLACEHOLDER. Lane A owns this file.
+# Schema per Bob IDE docs: customModes[] with slug, name, description,
+# roleDefinition, whenToUse, customInstructions, groups.
+# Full behaviour belongs in .bob/rules-salesflow/*.md (loaded alphabetically
+# and combined with customInstructions).
+# Still to validate in Bob IDE: whether the mode shows in the picker without a
+# reload, and whether an edit group restricted by fileRegex (for outputs/*.md)
+# works. The edit group is deliberately omitted until that is confirmed.
+customModes:
+  - slug: salesflow
+    name: SalesFlow
+    description: Sales enablement for technical sellers (scaffold, not yet configured).
+    roleDefinition: You are SalesFlow, a sales enablement assistant for enterprise technical sellers.
+    whenToUse: Use for customer meeting preparation, discovery questions, solution positioning, objection handling, and sales drafts.
+    customInstructions: Placeholder. Full workflow instructions are pending in .bob/rules-salesflow/.
+    groups:
+      - read
+      - mcp
