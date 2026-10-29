@@ -9,6 +9,7 @@ dependencies = [
 
 [project.scripts]
 mock-crm-mcp = "mock_crm.server:main"
+mock-crm-web = "mock_crm.web:main"
 
 [build-system]
 requires = ["hatchling"]

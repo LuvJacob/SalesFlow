@@ -1,11 +1,7 @@
 {
   "_meta": {
     "synthetic": true,
-<<<<<<< Updated upstream
     "note": "All records are fictional. Lane C owns and maintains this file. No real customer data."
-=======
-    "note": "All records are fictional. Shipped as part of SalesFlow Feature 1."
->>>>>>> Stashed changes
   },
   "opportunities": [
     {
@@ -45,41 +41,6 @@
         "decision maker",
         "usable capacity"
       ],
-<<<<<<< Updated upstream
-      "source_id": "src_crm_opp_acme_001"
-    },
-    {
-      "opportunity_id": "opp_meridian_backup_01",
-      "account_id": "acct_meridian_bank",
-      "synthetic": true,
-      "name": "Meridian Financial Services backup modernisation",
-      "stage": "Qualification",
-      "requirements": [
-        "Replace aging backup infrastructure that cannot meet current retention SLAs",
-        "Near-zero RPO and sub-one-hour RTO for core banking systems",
-        "Data residency controls and tamper-proof audit trails for regulatory reporting"
-      ],
-      "stakeholders": [
-        {
-          "role": "VP of Technology Operations",
-          "name": "Synthetic Contact C",
-          "notes": "Main contact. Owns the backup and recovery infrastructure team."
-        }
-      ],
-      "notes": [
-        "2026-10-05: Discovery call with VP of Technology Operations. Confirmed backup infrastructure is 7 years old and failing SLA targets. Regulatory deadline mentioned but date not confirmed. Budget authority unclear — VP said it depends on project size."
-      ],
-      "post_meeting_notes": [],
-      "unknowns": [
-        "budget and approval threshold",
-        "specific regulatory deadline",
-        "economic buyer",
-        "current backup tooling and architecture details"
-      ],
-      "source_id": "src_crm_opp_meridian_001"
-=======
-      "notes": ["Initial inquiry received; no prior discovery meeting held."],
-      "unknowns": ["budget", "decision maker", "usable capacity"],
       "source_id": "src_crm_opp_acme_001",
       "seller": "Bob",
       "close_date": "2026-12-15",
@@ -103,9 +64,14 @@
         "Transit gateway setup"
       ],
       "stakeholders": [
-        {"role": "Cloud Architect", "name": "Synthetic Contact B"}
+        {
+          "role": "Cloud Architect",
+          "name": "Synthetic Contact B"
+        }
       ],
-      "notes": ["Proposal delivered; positive client feedback received last week."],
+      "notes": [
+        "Proposal delivered; positive client feedback received last week."
+      ],
       "unknowns": [],
       "source_id": "src_crm_opp_global_002",
       "seller": "Alice",
@@ -130,13 +96,18 @@
         "Automated failover"
       ],
       "stakeholders": [
-        {"role": "VP of IT Operations", "name": "Synthetic Contact C"}
+        {
+          "role": "VP of IT Operations",
+          "name": "Synthetic Contact C"
+        }
       ],
-      "notes": ["Meeting held 45 days ago; client went unresponsive after follow-up email."],
+      "notes": [
+        "Meeting held 45 days ago; client went unresponsive after follow-up email."
+      ],
       "unknowns": [],
       "source_id": "src_crm_opp_apex_003",
       "seller": "Bob",
-      "close_date": "2026-11-15",
+      "close_date": "2026-11-28",
       "last_activity_days": 45,
       "budget_confirmed": true,
       "decision_maker_identified": true,
@@ -157,13 +128,18 @@
         "Strict AES-256 data-at-rest encryption"
       ],
       "stakeholders": [
-        {"role": "CISO Office", "name": "Synthetic Contact D"}
+        {
+          "role": "CISO Office",
+          "name": "Synthetic Contact D"
+        }
       ],
-      "notes": ["Final security contract review ongoing; close date slipped past target."],
+      "notes": [
+        "Final security contract review ongoing; close date slipped past target."
+      ],
       "unknowns": [],
       "source_id": "src_crm_opp_summit_004",
       "seller": "Alice",
-      "close_date": "2026-10-15",
+      "close_date": "2026-11-25",
       "last_activity_days": 5,
       "budget_confirmed": true,
       "decision_maker_identified": true,
@@ -183,10 +159,18 @@
         "Low-latency file share"
       ],
       "stakeholders": [
-        {"role": "Lead DevOps", "name": "Synthetic Contact E"}
+        {
+          "role": "Lead DevOps",
+          "name": "Synthetic Contact E"
+        }
       ],
-      "notes": ["Inbound lead; initial contact made 4 days ago."],
-      "unknowns": ["budget", "decision maker"],
+      "notes": [
+        "Inbound lead; initial contact made 4 days ago."
+      ],
+      "unknowns": [
+        "budget",
+        "decision maker"
+      ],
       "source_id": "src_crm_opp_nova_005",
       "seller": "Charlie",
       "close_date": "2026-12-10",
@@ -198,7 +182,6 @@
       "days_in_stage": 3,
       "unresolved_requirements": [],
       "value": 50000.0
->>>>>>> Stashed changes
     }
   ]
 }

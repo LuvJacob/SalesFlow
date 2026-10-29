@@ -1,11 +1,7 @@
 {
   "_meta": {
     "synthetic": true,
-<<<<<<< Updated upstream
     "note": "All records are fictional. Lane C owns and maintains this file. No real customer data."
-=======
-    "note": "All records are fictional. Shipped as part of SalesFlow Feature 1."
->>>>>>> Stashed changes
   },
   "accounts": [
     {
@@ -30,7 +26,6 @@
       "source_id": "src_crm_acme_001"
     },
     {
-<<<<<<< Updated upstream
       "account_id": "acct_meridian_bank",
       "name": "Meridian Financial Services",
       "synthetic": true,
@@ -88,7 +83,8 @@
         "Internal technical sponsor"
       ],
       "source_id": "src_crm_nova_001"
-=======
+    },
+    {
       "account_id": "acct_global_logistics",
       "name": "Global Logistics",
       "synthetic": true,
@@ -136,9 +132,11 @@
       "challenges": [
         "High storage latencies in test environment"
       ],
-      "unknowns": ["annual IT budget", "total usable storage capacity"],
+      "unknowns": [
+        "annual IT budget",
+        "total usable storage capacity"
+      ],
       "source_id": "src_crm_nova_005"
->>>>>>> Stashed changes
     }
   ]
 }
