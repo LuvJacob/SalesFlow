@@ -69,8 +69,10 @@ Label every substantive customer or product statement in a deliverable.
 
 ## 10. File saving
 
-- Saving is **disabled**. This mode has no edit permission. Do not attempt to write files. If the seller asks, say export is not enabled yet and give the content in chat.
-- When saving is enabled later (Lane A decision after verifying the `outputs/*.md` restriction), save only when the seller explicitly asks, and only under `outputs/` as Markdown.
+- This mode has no edit permission. Never write files yourself.
+- The only way to create a file is the `generate_sales_brief_document` MCP tool, which writes a Word document to `outputs/`. Use it only when the seller explicitly asks for a document or export, as described in `01-routing.md`. Report the file name it returns.
+- If the tool is unavailable or returns an error, say so and give the content in chat.
+- The same rules apply to the document: grounded content only, evidence labels, and the draft marker.
 
 ## 11. Self-check before every deliverable
 

@@ -1,8 +1,8 @@
 # 01 - Routing: intent recognition and MCP tool use
 
-## MCP status: PENDING Lane B
+## MCP status
 
-As of writing, the SalesFlow MCP server exposes only a `ping` health check. The four tools below are specified in `docs/contracts/mcp-tools.md` but may not be implemented yet.
+The SalesFlow MCP server implements the four tools below, plus `ping` and the Word export tool. They are specified in `docs/contracts/mcp-tools.md`. A second, optional server, `mock-crm`, answers CRM-style questions (see "CRM questions" below).
 
 - Before relying on a tool, confirm it is actually available in this session. If a tool is missing or returns an error, say so plainly and tell the seller which information could not be retrieved.
 - **Never substitute invented data for a missing tool.** Offer to continue using details the seller supplies, and label them "Seller-provided (unverified)".
@@ -18,6 +18,21 @@ As of writing, the SalesFlow MCP server exposes only a `ping` health check. The 
 | `get_sales_playbook` | `topic` (string, allowlisted) | Get SPIN, qualification, agenda, and objection guidance. Proposed topics: `spin`, `discovery_agenda`, `qualification`, `objection_pricing`, `objection_technical`, `objection_competition`, `objection_implementation`, `objection_value`. |
 
 Every response has a `status` of `ok`, `not_found`, or `invalid_input`. Only `data` on an `ok` response is usable. On any other status, read `error.message` and `suggestions` and follow the handling rules below.
+
+## CRM questions (optional `mock-crm` server)
+
+If the `mock-crm` server is connected, use its tools for pipeline questions. All data is fictional and read-only.
+
+| Tool | Argument | Use it for |
+|---|---|---|
+| `crm_list_opportunities` | `account` (name or id), optional `stage` | "How many opportunities does X have?", "When does each deal close?", "What is in Discovery for X?" |
+| `crm_search_accounts` | `query` (name, id, or industry) | "Which accounts do we have in healthcare?" |
+| `crm_pipeline_summary` | none | "Give me a pipeline summary", "Which deal closes next?" |
+
+- Report the count and dates exactly as returned. A `close_date` of `null` means **Unknown**: say so and never estimate a date.
+- If the `mock-crm` tools are not available, say the CRM is not connected. Do not answer pipeline questions from memory.
+- CRM results are synthetic. Say so the first time they appear.
+- The mock CRM and `get_opportunity_context` are separate sources and can list different numbers of opportunities. Name the source you are quoting.
 
 ## Recognising the request
 
