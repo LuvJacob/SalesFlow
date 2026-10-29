@@ -1,0 +1,86 @@
+{
+  "_meta": {
+    "synthetic": true,
+    "note": "ALL RECORDS ARE FICTIONAL. This seed adds CRM fields (owner, close_date) and demo pipeline to whatever Lane C puts in ../data/. Records are merged by id: a seed field overrides the same field in Lane C's record, and seed-only records are added."
+  },
+  "accounts": [
+    {
+      "account_id": "acct_acme_healthcare",
+      "name": "Acme Healthcare",
+      "industry": "Healthcare",
+      "owner": "Synthetic Seller A",
+      "region": "North America"
+    },
+    {
+      "account_id": "acct_harbor_logistics",
+      "name": "Harbor Logistics",
+      "industry": "Logistics",
+      "owner": "Synthetic Seller B",
+      "region": "EMEA"
+    },
+    {
+      "account_id": "acct_summit_credit_union",
+      "name": "Summit Credit Union",
+      "industry": "Financial Services",
+      "owner": "Synthetic Seller A",
+      "region": "North America"
+    },
+    {
+      "account_id": "acct_pinecrest_education",
+      "name": "Pinecrest Education",
+      "industry": "Education",
+      "owner": "Synthetic Seller C",
+      "region": "North America"
+    }
+  ],
+  "opportunities": [
+    {
+      "opportunity_id": "opp_acme_storage_01",
+      "account_id": "acct_acme_healthcare",
+      "name": "Acme Healthcare storage modernization",
+      "stage": "Discovery",
+      "close_date": "2026-12-15",
+      "owner": "Synthetic Seller A"
+    },
+    {
+      "opportunity_id": "opp_acme_dr_02",
+      "account_id": "acct_acme_healthcare",
+      "name": "Acme Healthcare disaster recovery assessment",
+      "stage": "Qualification",
+      "close_date": "2027-02-28",
+      "owner": "Synthetic Seller A"
+    },
+    {
+      "opportunity_id": "opp_harbor_hybrid_01",
+      "account_id": "acct_harbor_logistics",
+      "name": "Harbor Logistics hybrid cloud migration",
+      "stage": "Proposal",
+      "close_date": "2026-11-30",
+      "owner": "Synthetic Seller B"
+    },
+    {
+      "opportunity_id": "opp_summit_security_01",
+      "account_id": "acct_summit_credit_union",
+      "name": "Summit Credit Union data encryption refresh",
+      "stage": "Negotiation",
+      "close_date": "2026-11-20",
+      "owner": "Synthetic Seller A"
+    },
+    {
+      "opportunity_id": "opp_summit_storage_02",
+      "account_id": "acct_summit_credit_union",
+      "name": "Summit Credit Union branch storage consolidation",
+      "stage": "Discovery",
+      "close_date": "2027-03-31",
+      "owner": "Synthetic Seller A"
+    },
+    {
+      "opportunity_id": "opp_pinecrest_backup_01",
+      "account_id": "acct_pinecrest_education",
+      "name": "Pinecrest Education backup modernization",
+      "stage": "Qualification",
+      "close_date": "2027-01-29",
+      "owner": "Synthetic Seller C"
+    }
+  ]
+}
