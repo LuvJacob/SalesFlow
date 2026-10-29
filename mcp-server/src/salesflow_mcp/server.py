@@ -36,6 +36,7 @@ from .brief_schema import (
     SolutionPositioning,
 )
 from .docx_generator import build_document, resolve_output_path
+from .risk_engine import analyze_opportunity_risk
 
 logging.basicConfig(stream=sys.stderr, level=logging.INFO, format="%(levelname)s %(message)s")
 log = logging.getLogger("salesflow")
@@ -348,6 +349,168 @@ def get_sales_playbook(topic: str) -> dict:
     }
 
 
+def get_at_risk_deals(
+    seller: str | None = None,
+    stage: str | None = None,
+    risk_category: str | None = None,
+) -> dict:
+    """Retrieve all deals with risk analysis, sorted by risk score descending.
+
+    Supports optional filtering by seller, stage, and risk_category.
+    """
+    try:
+        opps = _load_records("opportunities.json", "opportunities", ("opportunity_id", "account_id"))
+        accounts = _load_records("accounts.json", "accounts", ("account_id", "name"))
+    except DataUnavailable:
+        return _unavailable()
+
+    # Create account mapping for fast lookup
+    acct_map = {a["account_id"]: a for a in accounts}
+
+    results = []
+    for o in opps:
+        a = acct_map.get(o["account_id"])
+        analysis = analyze_opportunity_risk(o, a)
+
+        # Apply filters (case-insensitive)
+        if seller:
+            norm_seller = seller.strip().casefold()
+            opp_seller = str(o.get("seller", "")).strip().casefold()
+            if norm_seller != opp_seller:
+                continue
+
+        if stage:
+            norm_stage = stage.strip().casefold()
+            opp_stage = str(o.get("stage", "")).strip().casefold()
+            if norm_stage != opp_stage:
+                continue
+
+        if risk_category:
+            norm_risk = risk_category.strip().casefold()
+            opp_risk = str(analysis.get("risk_rating", "")).strip().casefold()
+            # support matching "high" with "high risk"
+            if norm_risk not in opp_risk and opp_risk not in norm_risk:
+                continue
+
+        results.append(analysis)
+
+    # Sort by risk_score descending
+    results.sort(key=lambda x: x["risk_score"], reverse=True)
+
+    return {
+        "status": "ok",
+        "data": {
+            "deals": results,
+            "count": len(results),
+        }
+    }
+
+
+def get_pipeline_summary(
+    seller: str | None = None,
+    stage: str | None = None,
+) -> dict:
+    """Retrieve a high-level summary of the sales pipeline and risk distribution."""
+    try:
+        opps = _load_records("opportunities.json", "opportunities", ("opportunity_id", "account_id"))
+        accounts = _load_records("accounts.json", "accounts", ("account_id", "name"))
+    except DataUnavailable:
+        return _unavailable()
+
+    acct_map = {a["account_id"]: a for a in accounts}
+
+    total_deals = 0
+    total_value = 0.0
+    
+    risk_counts = {"High Risk": 0, "Medium Risk": 0, "Low Risk": 0}
+    risk_values = {"High Risk": 0.0, "Medium Risk": 0.0, "Low Risk": 0.0}
+    
+    factor_counts: dict[str, int] = {}
+    seller_summary: dict[str, dict[str, Any]] = {}
+    stage_summary: dict[str, dict[str, Any]] = {}
+
+    for o in opps:
+        # Apply filters (case-insensitive)
+        if seller:
+            norm_seller = seller.strip().casefold()
+            opp_seller = str(o.get("seller", "")).strip().casefold()
+            if norm_seller != opp_seller:
+                continue
+
+        if stage:
+            norm_stage = stage.strip().casefold()
+            opp_stage = str(o.get("stage", "")).strip().casefold()
+            if norm_stage != opp_stage:
+                continue
+
+        a = acct_map.get(o["account_id"])
+        analysis = analyze_opportunity_risk(o, a)
+        
+        rating = analysis["risk_rating"]
+        val = o.get("value", 0.0) or 0.0
+        
+        total_deals += 1
+        total_value += val
+        
+        risk_counts[rating] = risk_counts.get(rating, 0) + 1
+        risk_values[rating] = risk_values.get(rating, 0.0) + val
+        
+        # Track risk factors
+        for flagged in analysis.get("flagged_risks", []):
+            factor = flagged["factor"]
+            factor_counts[factor] = factor_counts.get(factor, 0) + 1
+
+        # Seller stats
+        opp_seller = o.get("seller", "Unknown")
+        if opp_seller not in seller_summary:
+            seller_summary[opp_seller] = {"count": 0, "value": 0.0, "high_risk_count": 0}
+        seller_summary[opp_seller]["count"] += 1
+        seller_summary[opp_seller]["value"] += val
+        if rating == "High Risk":
+            seller_summary[opp_seller]["high_risk_count"] += 1
+
+        # Stage stats
+        opp_stage = o.get("stage", "Unknown")
+        if opp_stage not in stage_summary:
+            stage_summary[opp_stage] = {"count": 0, "value": 0.0, "high_risk_count": 0}
+        stage_summary[opp_stage]["count"] += 1
+        stage_summary[opp_stage]["value"] += val
+        if rating == "High Risk":
+            stage_summary[opp_stage]["high_risk_count"] += 1
+
+    # Sort factor counts descending
+    sorted_factors = [{"factor": f, "count": c} for f, c in sorted(factor_counts.items(), key=lambda x: x[1], reverse=True)]
+
+    return {
+        "status": "ok",
+        "data": {
+            "total_deals": total_deals,
+            "total_value": total_value,
+            "risk_distribution": {
+                "high_risk": {
+                    "count": risk_counts["High Risk"],
+                    "value": risk_values["High Risk"],
+                },
+                "medium_risk": {
+                    "count": risk_counts["Medium Risk"],
+                    "value": risk_values["Medium Risk"],
+                },
+                "low_risk": {
+                    "count": risk_counts["Low Risk"],
+                    "value": risk_values["Low Risk"],
+                },
+            },
+            "top_risk_factors": sorted_factors,
+            "seller_summary": seller_summary,
+            "stage_summary": stage_summary,
+            "disclaimer": (
+                "Risk scores are calculated based on heuristic rules for prioritization "
+                "and do not represent statistically validated statistical or machine learning predictions."
+            ),
+        }
+    }
+
+
 def ping() -> dict:
     """Health check. Confirms the SalesFlow MCP server is running. Reads no data."""
     return {"status": "ok", "data": {"server": "salesflow", "version": "0.1.0"}}
@@ -430,7 +593,7 @@ def generate_sales_brief_document(brief_data: dict) -> dict:
 # Read-only annotations for lookup tools; the export tool is write-annotated
 _WRITE_ONCE = {"readOnlyHint": False, "destructiveHint": False, "idempotentHint": False, "openWorldHint": False}
 
-for _fn in (ping, get_account_profile, get_opportunity_context, search_product_knowledge, get_sales_playbook):
+for _fn in (ping, get_account_profile, get_opportunity_context, search_product_knowledge, get_sales_playbook, get_at_risk_deals, get_pipeline_summary):
     mcp.tool(_fn, annotations=READ_ONLY)
 
 mcp.tool(generate_sales_brief_document, annotations=_WRITE_ONCE)

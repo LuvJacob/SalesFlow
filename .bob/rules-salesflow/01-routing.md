@@ -8,7 +8,7 @@ The SalesFlow MCP server implements the four tools below, plus `ping` and the Wo
 - **Never substitute invented data for a missing tool.** Offer to continue using details the seller supplies, and label them "Seller-provided (unverified)".
 - Tool names below are the contract names. Bob may show them with a server prefix (server name `salesflow`). Use the identifier exactly as Bob exposes it. If it differs from this file, use Bob's and mention the difference.
 
-## The four tools
+## The available tools
 
 | Tool | Argument | Use it to |
 |---|---|---|
@@ -16,6 +16,8 @@ The SalesFlow MCP server implements the four tools below, plus `ping` and the Wo
 | `get_opportunity_context` | `account_id` (string, from the account lookup) | Get stage, requirements, stakeholders, notes, and `unknowns`. Takes an ID, never a company name. |
 | `search_product_knowledge` | `query` (string) | Find product entries that match stated requirements. Each carries `source_id`, `source_url`, `verified_date`. |
 | `get_sales_playbook` | `topic` (string, allowlisted) | Get SPIN, qualification, agenda, and objection guidance. Proposed topics: `spin`, `discovery_agenda`, `qualification`, `objection_pricing`, `objection_technical`, `objection_competition`, `objection_implementation`, `objection_value`. |
+| `get_at_risk_deals` | `seller` (string, optional), `stage` (string, optional), `risk_category` (string, optional) | Retrieve a list of opportunities analyzed for risk, sorted by risk score descending. Supports optional filters. |
+| `get_pipeline_summary` | `seller` (string, optional), `stage` (string, optional) | Retrieve a high-level executive summary of pipeline value, risk distribution, and top risk factors. Supports optional filters. |
 
 Every response has a `status` of `ok`, `not_found`, or `invalid_input`. Only `data` on an `ok` response is usable. On any other status, read `error.message` and `suggestions` and follow the handling rules below.
 
@@ -45,6 +47,7 @@ Classify the request, then run the matching workflow. One request can combine se
 | 3. Solution positioning | "what should we recommend", "which products", "solution fit", stated needs such as storage, resilience, security | `search_product_knowledge` using the confirmed requirements |
 | 4. Objection handling | "customer says", "too expensive", "competitor", "worried about", "pushback" | `get_sales_playbook` for the matching `objection_*` topic; `search_product_knowledge` only if a technical claim is needed |
 | 5. Content generation | "brief", "summary", "follow-up email", "draft", "write up" | Reuse results already in the conversation; call a tool again only for missing pieces |
+| 6. Deal intelligence & risk detection | "at risk", "pipeline health", "deal risk", "pipeline summary", "which of my opportunities are at risk", "what actions should I take" | `get_pipeline_summary`, then `get_at_risk_deals` |
 
 A full "prepare me for a meeting with X" request runs workflows 1, 2, 3, then 5 (the brief), and adds likely objections from workflow 4 only when asked or when the brief template calls for them.
 
@@ -81,3 +84,22 @@ Do not call tools you do not need. Do not repeat a call whose result is already 
   - On `status: invalid_input`, tell the seller which field failed validation.
   - The tool writes to `outputs/` in the repository; it never writes to arbitrary paths.
   - The tool does not silently overwrite files; repeated exports within the same second will produce a new timestamped filename.
+
+
+## Deal Risk & Prioritization Presentation (Feature 1)
+
+When answering questions about pipeline health, at-risk deals, or deal prioritization (Workflow 6), always present the results in this specific structure:
+
+1. **Concise Executive Summary first**:
+   - Total pipeline value and count of opportunities analyzed.
+   - Breakdown of risk distribution (High, Medium, Low Risk counts and values).
+   - High-level list of top risk factors (e.g. "No recent customer activity", "Missing budget confirmation").
+   - Explicit disclaimer that risk scores are heuristic-based prioritization tools and not statistically validated predictions.
+
+2. **Detailed Supporting Evidence**:
+   - List the opportunities matching the query, sorted by `risk_score` descending (highest risk first).
+   - For each opportunity, provide:
+     - **Overall Rating**: e.g., High Risk (Score: X) or Medium Risk (Score: Y).
+     - **Seller and Stage**: Who owns the deal, and what stage it's in.
+     - **Flagged Risks**: A list of active risk factors, with actual supporting CRM evidence (e.g. "Last activity 45 days ago"), the score contribution, and the recommended seller action.
+     - **Unknown/Missing Factors**: List any missing information explicitly as "Unknown" (e.g. "last_activity_days", "close_date"), explaining that these were not treated as negative evidence.
