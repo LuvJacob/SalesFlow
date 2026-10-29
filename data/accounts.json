@@ -1,7 +1,11 @@
 {
   "_meta": {
     "synthetic": true,
+<<<<<<< Updated upstream
     "note": "All records are fictional. Lane C owns and maintains this file. No real customer data."
+=======
+    "note": "All records are fictional. Shipped as part of SalesFlow Feature 1."
+>>>>>>> Stashed changes
   },
   "accounts": [
     {
@@ -26,6 +30,7 @@
       "source_id": "src_crm_acme_001"
     },
     {
+<<<<<<< Updated upstream
       "account_id": "acct_meridian_bank",
       "name": "Meridian Financial Services",
       "synthetic": true,
@@ -83,6 +88,57 @@
         "Internal technical sponsor"
       ],
       "source_id": "src_crm_nova_001"
+=======
+      "account_id": "acct_global_logistics",
+      "name": "Global Logistics",
+      "synthetic": true,
+      "industry": "Transportation",
+      "overview": "Global supply chain and logistics company with robust, active cloud environments.",
+      "challenges": [
+        "Slight increase in cloud egress costs",
+        "Routine capacity planning"
+      ],
+      "unknowns": [],
+      "source_id": "src_crm_global_002"
+    },
+    {
+      "account_id": "acct_apex_retail",
+      "name": "Apex Retail",
+      "synthetic": true,
+      "industry": "Retail",
+      "overview": "Multi-national retail chain facing severe competition and lagging e-commerce performance.",
+      "challenges": [
+        "Stagnant digital sales growth",
+        "Legacy system outages during peak events"
+      ],
+      "unknowns": [],
+      "source_id": "src_crm_apex_003"
+    },
+    {
+      "account_id": "acct_summit_finance",
+      "name": "Summit Finance",
+      "synthetic": true,
+      "industry": "Financial Services",
+      "overview": "Mid-tier investment bank operating under strict compliance guidelines.",
+      "challenges": [
+        "Tightening data security regulations",
+        "Legacy mainframe database bottlenecks"
+      ],
+      "unknowns": [],
+      "source_id": "src_crm_summit_004"
+    },
+    {
+      "account_id": "acct_nova_tech",
+      "name": "Nova Tech",
+      "synthetic": true,
+      "industry": "Technology",
+      "overview": "Early-stage SaaS company moving quickly to replace its dev environment storage.",
+      "challenges": [
+        "High storage latencies in test environment"
+      ],
+      "unknowns": ["annual IT budget", "total usable storage capacity"],
+      "source_id": "src_crm_nova_005"
+>>>>>>> Stashed changes
     }
   ]
 }

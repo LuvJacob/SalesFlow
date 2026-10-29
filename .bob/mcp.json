@@ -2,7 +2,13 @@
   "mcpServers": {
     "salesflow": {
       "command": "uv",
-      "args": ["run", "--directory", "mcp-server", "salesflow-mcp"]
+      "args": [
+        "run",
+        "--directory",
+        "${workspaceFolder}/mcp-server",
+        "salesflow-mcp"
+      ],
+      "disabled": false
     }
   }
 }
