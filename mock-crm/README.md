@@ -37,11 +37,16 @@ Every response has a `status` of `ok`, `not_found`, or `invalid_input`, as in `d
 
 ## Run and test
 
+No Bob needed for these. Requires `uv` (`brew install uv`).
+
 ```bash
 cd mock-crm
-uv sync
-uv run python tests/run_crm_test.py     # 14 offline checks, exit code 0 = pass
-uv run mock-crm-mcp                     # starts the stdio server
+uv sync                                  # one-time install
+uv run python scripts/demo.py            # readable pipeline summary + Acme, in the terminal
+uv run python scripts/demo.py Summit     # one account's opportunities and close dates
+uv run python scripts/demo.py --search health
+uv run python tests/run_crm_test.py      # 14 offline checks, exit code 0 = pass
+uv run mock-crm-mcp                      # the real stdio server (waits silently; Ctrl+C to stop)
 ```
 
 ## Register in Bob
@@ -69,9 +74,15 @@ With the **SalesFlow** mode selected:
 - "Which Summit Credit Union deal closes first?"
 - "Give me a pipeline summary."
 
-## Not wired into the SalesFlow mode yet
+## How the SalesFlow mode uses it
 
-The SalesFlow mode's rule files do not mention these tools, so the mode may not choose them on its own. Lane A needs to add the three tools to `.bob/rules-salesflow/01-routing.md`. Until then, name the tool in your prompt.
+`.bob/rules-salesflow/01-routing.md` has a "CRM questions" section that routes pipeline questions to these tools. The server must be registered in Bob (above) for the mode to use them. Not yet verified in a live Bob session.
+
+## Known limits
+
+- The seed has 3 accounts that are not in `data/accounts.json`, so SalesFlow's `get_account_profile` returns `not_found` for them. Acme is the only account both servers know.
+- For Acme, the CRM lists 2 opportunities, while `get_opportunity_context` returns 1. Name the source when quoting.
+- A missing, unreadable, or invalid Lane C file is skipped and logged to stderr. The server then serves the seed alone.
 
 ## Safety
 
