@@ -1,0 +1,95 @@
+{
+  "topic": "qualification",
+  "title": "Opportunity Qualification",
+  "synthetic": true,
+  "source_id": "src_playbook_qual_001",
+  "guidance": {
+    "overview": "Qualification determines whether an opportunity is real, winnable, and worth pursuing. Use the MEDDIC framework as a checklist. Flag each dimension as Known, Partial, or Unknown at the end of each discovery interaction.",
+    "framework": "MEDDIC",
+    "dimensions": [
+      {
+        "name": "Metrics",
+        "key_question": "What measurable outcome does the customer expect from solving this problem?",
+        "status_indicators": {
+          "known": "Customer has stated a specific operational or business target (e.g. recovery time under 4 hours, zero unplanned downtime).",
+          "partial": "Customer has described a general improvement goal but no specific measure.",
+          "unknown": "No success criteria mentioned."
+        },
+        "discovery_questions": [
+          "How would you measure success at the end of this project?",
+          "What does 'high availability' mean for your team in concrete terms?"
+        ]
+      },
+      {
+        "name": "Economic Buyer",
+        "key_question": "Who has final budget authority for this purchase?",
+        "status_indicators": {
+          "known": "Name and role confirmed.",
+          "partial": "Role known but individual not identified.",
+          "unknown": "No information on who approves spend."
+        },
+        "discovery_questions": [
+          "Who else would be involved in the final decision on something like this?",
+          "Is budget approval centralised or does each department control its own?"
+        ]
+      },
+      {
+        "name": "Decision Criteria",
+        "key_question": "What factors will the customer use to choose a solution?",
+        "status_indicators": {
+          "known": "Customer has listed specific criteria (performance, support, integration, cost).",
+          "partial": "One or two criteria mentioned but not a complete picture.",
+          "unknown": "No criteria shared."
+        },
+        "discovery_questions": [
+          "When evaluating options, what factors matter most to your team?",
+          "Are there any must-have requirements a solution needs to meet?"
+        ]
+      },
+      {
+        "name": "Decision Process",
+        "key_question": "What steps does the customer follow to make a purchase decision?",
+        "status_indicators": {
+          "known": "Steps, approvers, and timeline confirmed.",
+          "partial": "Some steps known; timeline or approvers unclear.",
+          "unknown": "No process information."
+        },
+        "discovery_questions": [
+          "What does your internal approval process look like for a project of this size?",
+          "What would need to happen for you to move forward in the next quarter?"
+        ]
+      },
+      {
+        "name": "Identify Pain",
+        "key_question": "Is the problem urgent, significant, and owned by someone with authority?",
+        "status_indicators": {
+          "known": "Specific pain confirmed with business impact stated.",
+          "partial": "Pain mentioned but impact not quantified.",
+          "unknown": "General interest only; no clear pain."
+        },
+        "discovery_questions": [
+          "What is the biggest risk if you do not address this in the next six months?",
+          "Is this a priority for your leadership team right now?"
+        ]
+      },
+      {
+        "name": "Champion",
+        "key_question": "Is there an internal advocate who wants this to succeed and will represent us?",
+        "status_indicators": {
+          "known": "Individual identified; has engaged actively and shared internal context.",
+          "partial": "Someone is interested but has not demonstrated internal influence.",
+          "unknown": "No champion identified."
+        },
+        "discovery_questions": [
+          "Who on your team would own the relationship with our technical team if we move forward?",
+          "Is there someone internally who would sponsor a proof of concept?"
+        ]
+      }
+    ],
+    "guidance_notes": [
+      "A deal with more than two Unknown dimensions is high-risk. Prioritise uncovering Metrics and Economic Buyer first.",
+      "Do not push for all dimensions in one meeting. Qualification is an ongoing process.",
+      "Document the status after every customer interaction and share with the account team."
+    ]
+  }
+}

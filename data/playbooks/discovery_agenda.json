@@ -1,0 +1,60 @@
+{
+  "topic": "discovery_agenda",
+  "title": "Discovery Call Agenda",
+  "synthetic": true,
+  "source_id": "src_playbook_agenda_001",
+  "guidance": {
+    "overview": "A structured 30-minute discovery agenda that ensures all SPIN categories are covered and key qualification gaps are surfaced before the meeting ends.",
+    "default_duration_minutes": 30,
+    "segments": [
+      {
+        "start_min": 0,
+        "end_min": 3,
+        "name": "Introductions and meeting goal",
+        "desired_outcome": "Both parties agree on what a successful meeting looks like.",
+        "notes": "State the meeting objective out loud and get the customer to confirm or adjust it."
+      },
+      {
+        "start_min": 3,
+        "end_min": 10,
+        "name": "Situation",
+        "desired_outcome": "Confirm current-state facts: environment, team, systems in use.",
+        "notes": "Reference any CRM context you already have to avoid re-asking known facts."
+      },
+      {
+        "start_min": 10,
+        "end_min": 18,
+        "name": "Problem and Implication",
+        "desired_outcome": "Customer has described their key pain points and acknowledged the business impact.",
+        "notes": "Probe for consequences — operational, financial, compliance, or reputational. Do not rush to solutions."
+      },
+      {
+        "start_min": 18,
+        "end_min": 24,
+        "name": "Need-Payoff and success criteria",
+        "desired_outcome": "Customer has articulated what success looks like in their own words.",
+        "notes": "Ask what a solution would enable, not what product they want."
+      },
+      {
+        "start_min": 24,
+        "end_min": 28,
+        "name": "Qualification gaps",
+        "desired_outcome": "Budget authority, decision process, and timeline are partially understood or explicitly flagged as unknown.",
+        "notes": "Cover the unknowns list from the opportunity record. Do not pressure; frame as 'to help us prepare the right next step'."
+      },
+      {
+        "start_min": 28,
+        "end_min": 30,
+        "name": "Recap and next steps",
+        "desired_outcome": "Both parties leave with a clear, agreed next action and owner.",
+        "notes": "Summarise what you heard, confirm any commitments, and propose a specific next step."
+      }
+    ],
+    "scaling_rule": "For meetings longer than 30 minutes, extend Problem/Implication and Need-Payoff proportionally. For shorter meetings, compress Situation and skip Qualification gaps if necessary — protect the Implication time.",
+    "tips": [
+      "Send a brief agenda to the customer in advance so they arrive prepared.",
+      "Keep a visible timer to avoid overrunning Situation questions.",
+      "If the customer steers to solutions early, acknowledge it and park it: 'That is worth exploring — let me make a note and we will come back to it.'"
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "topic": "objection_value",
+  "title": "Objection Handling: Business Value",
+  "synthetic": true,
+  "source_id": "src_playbook_obj_value_001",
+  "guidance": {
+    "overview": "Value objections occur when the customer does not see sufficient benefit to justify the effort or cost. This usually means the Implication and Need-Payoff phases of discovery were incomplete. Return to the customer's stated pain and business impact.",
+    "clarify_first": [
+      "What outcome would make this project worthwhile for your leadership team?",
+      "When you think about the problems you described, how significant is the impact if they continue for another year?",
+      "What is driving the timing of this decision — or is there no urgency right now?"
+    ],
+    "acknowledge": "It is important that any investment has a clear return — that is a reasonable bar to set.",
+    "response_points": [
+      {
+        "point": "Return to the customer's own pain",
+        "detail": "Reference what the customer said during discovery — the operational risk, the compliance exposure, the staff time lost. Ask them to confirm whether those are still real concerns.",
+        "label": "Use customer's own words; label Assumed if not confirmed by a tool"
+      },
+      {
+        "point": "Identify whether urgency is absent or unstated",
+        "detail": "A value objection often means no compelling event. Ask directly what would need to change for this to become a priority.",
+        "label": "Standard guidance"
+      },
+      {
+        "point": "Link to verified product capabilities",
+        "detail": "Connect each stated pain to a specific verified capability from the product knowledge tool. Do not invent value claims.",
+        "label": "Verified — cite source_id from tool result"
+      }
+    ],
+    "reframe": "Ask: 'If we could show that this addresses [specific pain they described], what would the conversation look like internally?' This tests whether a champion exists and whether the pain is real.",
+    "propose_next_step": "Offer a business case workshop or a focused proof of value on the customer's highest-priority problem.",
+    "do_not_say": [
+      "ROI percentages, payback periods, or savings estimates without a verified source.",
+      "Claims that the value is obvious or that other customers always see benefit.",
+      "Pressure tactics or artificial urgency."
+    ]
+  }
+}

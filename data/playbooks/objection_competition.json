@@ -1,0 +1,39 @@
+{
+  "topic": "objection_competition",
+  "title": "Objection Handling: Competitive",
+  "synthetic": true,
+  "source_id": "src_playbook_obj_comp_001",
+  "guidance": {
+    "overview": "Competitive objections occur when the customer mentions an alternative vendor or product. Never disparage competitors or make unsupported claims about their products. Focus on the customer's stated requirements and differentiate on verified strengths.",
+    "clarify_first": [
+      "What have you seen from them that stood out?",
+      "Are there specific capabilities or terms you are comparing?",
+      "What criteria matter most to your team when evaluating options?"
+    ],
+    "acknowledge": "It makes sense to evaluate your options carefully — that is the right approach for a decision of this size.",
+    "response_points": [
+      {
+        "point": "Redirect to customer criteria",
+        "detail": "Return to the requirements the customer stated in discovery. Ask which of their criteria each option addresses.",
+        "label": "Standard guidance — use customer's own words"
+      },
+      {
+        "point": "Differentiate on verified strengths only",
+        "detail": "Use only capabilities returned by the product knowledge tool with a source. Do not invent differentiators.",
+        "label": "Verified — cite source_id from tool result"
+      },
+      {
+        "point": "Do not attack",
+        "detail": "Making negative claims about a competitor without a verified source damages credibility. If the customer raises a specific competitor weakness, acknowledge you have heard it and suggest validating independently.",
+        "label": "Standard guidance — no competitor claims"
+      }
+    ],
+    "reframe": "Ask the customer to share their evaluation criteria openly: 'What would the ideal solution need to do that you have not seen yet?' This surfaces gaps the competitor may not address.",
+    "propose_next_step": "Offer a side-by-side requirements mapping exercise, or a proof of concept on the customer's own workload.",
+    "do_not_say": [
+      "Any claim about a competitor's product, weakness, price, or roadmap.",
+      "Statements like 'competitor X cannot do Y' without a verified source.",
+      "Anything disparaging about a competitor."
+    ]
+  }
+}

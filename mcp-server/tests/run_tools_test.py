@@ -82,16 +82,21 @@ async def main() -> None:
         r = await call(c, "get_opportunity_context", {"account_id": ""})
         record("4b empty account id", is_error(r, "invalid_input"), r["error"]["message"])
 
-        # 5. product search
+        # 5. product search — real catalog (Lane C data); top result must be a known product ID
+        KNOWN_PRODUCT_IDS = {
+            "prod_flashsystem_5200", "prod_flashsystem_7300", "prod_spectrum_virtualize",
+            "prod_cloud_object_storage", "prod_spectrum_protect", "prod_guardium_data_protection",
+        }
         for q in ("high availability", "storage", "disaster recovery"):
             r = await call(c, "search_product_knowledge", {"query": q})
             res = r.get("data", {}).get("results", [])
+            top_id = res[0]["product_id"] if res else None
             ok = (
-                r["status"] == "ok" and bool(res) and res[0]["product_id"] == "prod_storage_01"
-                and res[0]["verification_status"] == "synthetic_unverified" and res[0]["source_url"] is None
-                and "notice" in r["data"]
+                r["status"] == "ok" and bool(res) and top_id in KNOWN_PRODUCT_IDS
+                and res[0]["verification_status"] == "verified"
+                and res[0]["source_url"] is not None
             )
-            record(f"5 product search '{q}'", ok, f"top={res[0]['product_id'] if res else None} score={res[0]['match_score'] if res else None}")
+            record(f"5 product search '{q}'", ok, f"top={top_id} score={res[0]['match_score'] if res else None}")
         r = await call(c, "search_product_knowledge", {"query": "quantum blockchain"})
         record("5b product no match", is_error(r, "not_found"), r["error"]["message"])
         # 6. invalid / empty query

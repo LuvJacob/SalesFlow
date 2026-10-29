@@ -1,0 +1,39 @@
+{
+  "topic": "objection_technical",
+  "title": "Objection Handling: Technical Capability",
+  "synthetic": true,
+  "source_id": "src_playbook_obj_tech_001",
+  "guidance": {
+    "overview": "Technical objections arise when the customer doubts the solution can meet a specific requirement. Acknowledge the concern, use only verified product facts, and flag anything that needs specialist validation.",
+    "clarify_first": [
+      "Can you tell me more about the specific requirement or workload you are concerned about?",
+      "Is this based on something you have seen in a previous evaluation, or a current requirement you need to meet?",
+      "What does the technical team need to see to feel confident?"
+    ],
+    "acknowledge": "Technical fit is critical — it is the right thing to validate carefully before making any commitments.",
+    "response_points": [
+      {
+        "point": "Use only verified capabilities",
+        "detail": "Reference only what the product knowledge tool has returned with a source. Do not add capabilities from memory.",
+        "label": "Verified — cite source_id from tool result"
+      },
+      {
+        "point": "Surface limitations honestly",
+        "detail": "State any limitations returned by the product tool. Customers trust sellers who acknowledge constraints.",
+        "label": "Verified — from product limitations field"
+      },
+      {
+        "point": "Propose validation",
+        "detail": "For anything the product data does not confirm, propose a technical proof of concept, architecture review, or specialist call rather than asserting fit.",
+        "label": "Standard guidance — no product claim"
+      }
+    ],
+    "reframe": "Position any gap as a question to investigate together: 'That is an important requirement — let me connect you with the technical team who can validate it properly.'",
+    "propose_next_step": "Offer a technical deep-dive session or architecture workshop with a specialist.",
+    "do_not_say": [
+      "Capability claims not supported by a tool result.",
+      "Performance figures, benchmark results, or certification claims not in the product data.",
+      "Compatibility or integration claims without a verified source."
+    ]
+  }
+}

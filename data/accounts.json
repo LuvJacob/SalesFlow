@@ -1,7 +1,7 @@
 {
   "_meta": {
     "synthetic": true,
-    "note": "All records are fictional. Lane C owns and will expand this file."
+    "note": "All records are fictional. Lane C owns and maintains this file. No real customer data."
   },
   "accounts": [
     {
@@ -9,13 +9,80 @@
       "name": "Acme Healthcare",
       "synthetic": true,
       "industry": "Healthcare",
-      "overview": "Fictional regional healthcare network with hospitals and outpatient clinics.",
+      "overview": "Fictional regional healthcare network operating three hospitals and twelve outpatient clinics. Runs a mix of on-premises and virtualised infrastructure supporting clinical, administrative, and patient-facing systems.",
       "challenges": [
-        "Aging on-premises storage arrays approaching end of support",
-        "Need for high availability for clinical systems"
+        "Aging on-premises storage arrays approaching end of support within 18 months",
+        "Need for high availability and sub-four-hour recovery for clinical systems",
+        "Increasing storage capacity demands from medical imaging workloads",
+        "Regulatory compliance obligations under HIPAA for data protection and audit trails",
+        "Limited internal storage expertise following recent staff turnover"
       ],
-      "unknowns": ["annual IT budget", "total usable storage capacity"],
+      "unknowns": [
+        "Annual IT budget and capital expenditure approval process",
+        "Total usable storage capacity currently deployed",
+        "Identity of the economic buyer and decision-making process",
+        "Whether a formal RFP process is required"
+      ],
       "source_id": "src_crm_acme_001"
+    },
+    {
+      "account_id": "acct_meridian_bank",
+      "name": "Meridian Financial Services",
+      "synthetic": true,
+      "industry": "Financial Services",
+      "overview": "Fictional regional bank and asset management firm with approximately 200 branches. Runs core banking, trading, and customer data systems on a mix of on-premises mainframe and distributed infrastructure.",
+      "challenges": [
+        "Growing data volumes from transaction records and regulatory reporting",
+        "Strict recovery point and recovery time requirements for core banking (RPO near-zero, RTO under one hour)",
+        "Increasing pressure from regulators to demonstrate data residency and audit trail controls",
+        "Ageing backup infrastructure that cannot meet current retention policy requirements"
+      ],
+      "unknowns": [
+        "Current backup and replication architecture details",
+        "Regulatory reporting deadlines driving urgency",
+        "Whether modernisation is funded under current fiscal year budget",
+        "Internal champion identity"
+      ],
+      "source_id": "src_crm_meridian_001"
+    },
+    {
+      "account_id": "acct_crestview_logistics",
+      "name": "Crestview Logistics",
+      "synthetic": true,
+      "industry": "Logistics and Supply Chain",
+      "overview": "Fictional mid-size logistics company managing warehouse, fleet, and last-mile delivery operations across five regional distribution centres. Runs ERP, warehouse management, and telematics systems.",
+      "challenges": [
+        "Rapid data growth from IoT sensors and telematics across the fleet",
+        "Lack of a centralised backup strategy — each site manages its own storage independently",
+        "Recent ransomware incident at a peer company has raised board-level concern about resilience"
+      ],
+      "unknowns": [
+        "Total data volumes across all sites",
+        "Whether IT decisions are centralised or made per site",
+        "Budget authority and approval process",
+        "Current backup tools and retention policies at each site",
+        "Timeline and urgency — no confirmed project start date"
+      ],
+      "source_id": "src_crm_crestview_001"
+    },
+    {
+      "account_id": "acct_nova_research",
+      "name": "Nova Research Institute",
+      "synthetic": true,
+      "industry": "Research and Higher Education",
+      "overview": "Fictional academic research institute affiliated with a university. Runs large-scale compute and storage for genomics, climate modelling, and materials science workloads. Operates a mix of on-premises HPC storage and cloud-based archival.",
+      "challenges": [
+        "Storage capacity growing faster than budget — requires cost-efficient scale-out",
+        "Long-term data retention requirements for grant compliance (7–10 years)",
+        "Inconsistent data protection across research groups — no unified backup policy"
+      ],
+      "unknowns": [
+        "Grant funding cycles and capital availability",
+        "Whether a procurement framework or preferred vendor list applies",
+        "Total data under management across all research groups",
+        "Internal technical sponsor"
+      ],
+      "source_id": "src_crm_nova_001"
     }
   ]
 }

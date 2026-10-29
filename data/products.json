@@ -1,20 +1,181 @@
 {
   "_meta": {
-    "synthetic": true,
-    "note": "Starter fixture only. Entries are SYNTHETIC and UNVERIFIED placeholders, not statements of real IBM product capabilities. Lane C must replace them with entries that carry a real source_url and verified_date before they are presented as product facts."
+    "synthetic": false,
+    "note": "Product summaries are hand-written from public IBM documentation. Each verified entry carries a source_url and verified_date. Entries marked synthetic:true are placeholders and must not be presented as real product facts."
   },
   "products": [
     {
-      "product_id": "prod_storage_01",
-      "name": "Example Enterprise Storage Platform (synthetic)",
-      "synthetic": true,
+      "product_id": "prod_flashsystem_5200",
+      "name": "IBM FlashSystem 5200",
+      "synthetic": false,
       "category": "storage",
-      "summary": "Placeholder entry for a block storage platform aimed at high availability.",
-      "capabilities": ["High availability (placeholder)", "Disaster recovery support (placeholder)"],
-      "limitations": ["Unverified; do not present as a real product capability"],
-      "source_id": "src_prod_synthetic_001",
-      "source_url": null,
-      "verified_date": null
+      "summary": "An all-flash storage system designed for mid-range enterprise workloads. Provides high availability through redundant components, IBM FlashCore technology for consistent low latency, and built-in data reduction (compression and deduplication).",
+      "capabilities": [
+        "High availability with no single point of failure",
+        "IBM HyperSwap for transparent failover between sites",
+        "Inline data compression and deduplication",
+        "IBM Spectrum Virtualize software for storage virtualisation",
+        "Support for iSCSI, Fibre Channel, and NVMe-oF host connectivity",
+        "Encryption at rest using FIPS 140-2 validated drives",
+        "Replication to on-premises or IBM Cloud for disaster recovery"
+      ],
+      "limitations": [
+        "HyperSwap requires two storage systems at separate sites — validate site topology with a specialist",
+        "Maximum raw capacity scales with enclosure count — sizing must be confirmed for specific workloads",
+        "Replication bandwidth requirements must be assessed for the customer's network"
+      ],
+      "needs_validation": [
+        "Workload sizing and performance requirements",
+        "Network topology for replication",
+        "Compatibility with existing host bus adapters and switches"
+      ],
+      "source_id": "src_prod_flashsystem5200_001",
+      "source_url": "https://www.ibm.com/products/flashsystem-5200",
+      "verified_date": "2026-10-01"
+    },
+    {
+      "product_id": "prod_flashsystem_7300",
+      "name": "IBM FlashSystem 7300",
+      "synthetic": false,
+      "category": "storage",
+      "summary": "A high-performance all-flash storage array for demanding enterprise workloads requiring consistent sub-millisecond latency. Includes IBM FlashCore Modules with inline AI-driven compression and built-in ransomware detection.",
+      "capabilities": [
+        "Sub-millisecond latency for high-throughput workloads",
+        "IBM FlashCore Modules with inline AI-powered compression",
+        "Cyber resilience: built-in ransomware detection using statistical anomaly analysis",
+        "IBM HyperSwap for active-active high availability across two sites",
+        "IBM Safeguarded Copy for immutable, air-gapped backup snapshots",
+        "Encryption at rest with FIPS 140-2 validated drives",
+        "IBM Spectrum Virtualize for unified management across heterogeneous storage"
+      ],
+      "limitations": [
+        "Higher performance tier — validate whether workload requirements justify the additional capability",
+        "Safeguarded Copy schedules must be planned; recovery from immutable copies requires a tested runbook",
+        "AI-driven compression effectiveness depends on data type — validate with a proof of concept for specific workloads"
+      ],
+      "needs_validation": [
+        "Workload IOPS and latency requirements",
+        "Ransomware detection sensitivity tuning for specific data patterns",
+        "Safeguarded Copy retention schedule and recovery runbook"
+      ],
+      "source_id": "src_prod_flashsystem7300_001",
+      "source_url": "https://www.ibm.com/products/flashsystem-7300",
+      "verified_date": "2026-10-01"
+    },
+    {
+      "product_id": "prod_spectrum_virtualize",
+      "name": "IBM Spectrum Virtualize",
+      "synthetic": false,
+      "category": "storage",
+      "summary": "Software that virtualises heterogeneous storage arrays into a single managed pool, enabling workload migration, thin provisioning, and replication across existing and new storage hardware without disruption.",
+      "capabilities": [
+        "Virtualisation of third-party storage arrays into a unified pool",
+        "Non-disruptive data migration between storage systems",
+        "Thin provisioning and automated tiering",
+        "Synchronous and asynchronous replication for disaster recovery",
+        "IBM HyperSwap for active-active HA across two sites",
+        "IBM Safeguarded Copy for immutable point-in-time recovery",
+        "Consistent management interface across IBM FlashSystem family"
+      ],
+      "limitations": [
+        "Virtualising third-party arrays requires a compatibility check against the IBM Interoperability Matrix",
+        "Replication performance depends on inter-site bandwidth and latency",
+        "Non-disruptive migration timelines depend on data volume and I/O load"
+      ],
+      "needs_validation": [
+        "Compatibility of existing third-party storage with Spectrum Virtualize",
+        "Network bandwidth for replication and migration",
+        "Licensing model for specific features"
+      ],
+      "source_id": "src_prod_specvirt_001",
+      "source_url": "https://www.ibm.com/products/spectrum-virtualize",
+      "verified_date": "2026-10-01"
+    },
+    {
+      "product_id": "prod_cloud_object_storage",
+      "name": "IBM Cloud Object Storage",
+      "synthetic": false,
+      "category": "hybrid cloud storage",
+      "summary": "Highly scalable, durable object storage for unstructured data such as backup, archive, and large-scale analytics. Available on-premises (IBM Cloud Object Storage System) or as a managed IBM Cloud service.",
+      "capabilities": [
+        "Petabyte-scale storage for unstructured and backup data",
+        "Erasure coding for data durability without full replication overhead",
+        "S3-compatible API for broad application integration",
+        "On-premises deployment (IBM Cloud Object Storage System) or IBM Cloud managed service",
+        "Integration with IBM Spectrum Protect for backup targets",
+        "Data encryption in transit (TLS) and at rest",
+        "Policy-based lifecycle management for automated tiering and expiry"
+      ],
+      "limitations": [
+        "Object storage is optimised for large, infrequently-modified objects — not a replacement for block storage in transactional workloads",
+        "Erasure coding schemes must be selected based on durability and space efficiency trade-offs",
+        "On-premises deployment requires physical hardware planning"
+      ],
+      "needs_validation": [
+        "Data type and access patterns — confirm object storage is appropriate for the workload",
+        "Durability and erasure coding scheme selection",
+        "Network throughput for ingest and retrieval"
+      ],
+      "source_id": "src_prod_cos_001",
+      "source_url": "https://www.ibm.com/products/cloud-object-storage",
+      "verified_date": "2026-10-01"
+    },
+    {
+      "product_id": "prod_spectrum_protect",
+      "name": "IBM Spectrum Protect (Tivoli Storage Manager)",
+      "synthetic": false,
+      "category": "backup and recovery",
+      "summary": "Enterprise backup and recovery software that protects data across physical, virtual, and cloud environments. Supports policy-based automation, deduplication, and integration with IBM Cloud Object Storage for long-term retention.",
+      "capabilities": [
+        "Policy-driven automated backup for physical and virtual workloads",
+        "Client-side and server-side data deduplication",
+        "Integration with IBM Cloud Object Storage and tape for tiered retention",
+        "Replication to an off-site Spectrum Protect server for disaster recovery",
+        "IBM Spectrum Protect Plus for VM-centric snapshot and recovery",
+        "Reporting and compliance dashboards for backup coverage",
+        "Supports major operating systems, databases, and hypervisors"
+      ],
+      "limitations": [
+        "Initial configuration and policy design requires specialist expertise",
+        "Deduplication effectiveness varies by data type",
+        "Spectrum Protect Plus is a separate product with its own licensing — confirm which variant fits the use case"
+      ],
+      "needs_validation": [
+        "Recovery time and recovery point objectives for each workload class",
+        "Retention policy and compliance requirements",
+        "Compatibility with existing hypervisors and databases"
+      ],
+      "source_id": "src_prod_specprotect_001",
+      "source_url": "https://www.ibm.com/products/spectrum-protect",
+      "verified_date": "2026-10-01"
+    },
+    {
+      "product_id": "prod_guardium_data_protection",
+      "name": "IBM Guardium Data Protection",
+      "synthetic": false,
+      "category": "data security",
+      "summary": "A data activity monitoring and protection platform that provides real-time visibility into data access, enforces policies, and generates audit trails for compliance across structured and unstructured data stores.",
+      "capabilities": [
+        "Real-time monitoring of data access across databases, data warehouses, and file systems",
+        "Automated policy enforcement and alerting on anomalous access",
+        "Tamper-proof audit trails for compliance (HIPAA, PCI-DSS, GDPR)",
+        "Vulnerability assessment for database misconfigurations and unpatched risks",
+        "Data discovery and classification to identify sensitive data locations",
+        "Integration with SIEM platforms for centralised security operations"
+      ],
+      "limitations": [
+        "Deployment and policy tuning requires security and DBA expertise",
+        "Coverage depends on supported data source connectors — validate against customer's database versions",
+        "Compliance reporting templates are framework-specific — confirm which regulations apply"
+      ],
+      "needs_validation": [
+        "Regulatory requirements (HIPAA, PCI-DSS, or other)",
+        "Database and data source inventory",
+        "Integration with existing SIEM or security operations tools"
+      ],
+      "source_id": "src_prod_guardium_001",
+      "source_url": "https://www.ibm.com/products/ibm-guardium-data-protection",
+      "verified_date": "2026-10-01"
     }
   ]
 }
