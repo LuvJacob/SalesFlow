@@ -4,12 +4,15 @@ version = "0.1.0"
 description = "SalesFlow read-only MCP server (synthetic sales data) for IBM Bob"
 requires-python = ">=3.10"
 dependencies = [
+    "apscheduler>=3.11.2,<4",
     "fastmcp",
     "python-docx>=1.1.2",
+    "tzdata>=2026.6",
 ]
 
 [project.scripts]
 salesflow-mcp = "salesflow_mcp.server:main"
+salesflow-scheduler = "salesflow_mcp.scheduler:main"
 
 [build-system]
 requires = ["hatchling"]
