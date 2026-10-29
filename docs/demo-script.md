@@ -18,7 +18,8 @@
 |---|---|
 | `data/playbooks/*.json` may still be empty | `get_sales_playbook` then returns `not_found`. Do not promise playbook-backed objections until Lane C delivers the data. |
 | Only Acme Healthcare is guaranteed in the data | Use Acme for the live demo. |
-| Saving to `outputs/` is disabled in the mode | Do not ask Bob to save a file. Show the brief in chat. |
+| Word export (`generate_sales_brief_document`) is on `main` but not yet run by Lane D in Bob | Try it once before the demo. If it fails, show the brief in chat. Only ask for the document when you mean to. |
+| The mock CRM server (PR #4) is not merged and the mode rules do not mention it | Do not demo CRM questions unless Lane A has added the tools and you tested them in Bob. |
 | Only one catalog product may exist, marked synthetic | Say "synthetic demo catalog". Do not present product facts as official IBM specifications. |
 
 ## Canonical prompt

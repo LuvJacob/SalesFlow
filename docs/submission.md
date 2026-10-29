@@ -61,6 +61,6 @@ unzip -l ../SalesFlow-submission.zip | head -50     # inspect the contents
 
 1. Which lane will deliver `data/playbooks/*.json`, and by when?
 2. Does the relative `uv --directory mcp-server` form work in Bob, or should the README tell teammates to use their global MCP file?
-3. Is the saving of briefs to `outputs/` in or out of the MVP? It is currently disabled.
+3. The Word export (PR #3) now writes to `outputs/`. Should the demo show it? It needs one successful run in Bob first.
 4. Who approves the proposed PRD and README changes in `docs/prd-revisions.md`?
 5. Who owns catalog verification (PRD revision R-11)?

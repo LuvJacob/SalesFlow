@@ -64,6 +64,14 @@ Full contract: [`docs/contracts/mcp-tools.md`](docs/contracts/mcp-tools.md).
 | `get_sales_playbook` | `topic` | SPIN, qualification, and objection guidance |
 | `ping` | none | Connection health check |
 
+### Word export (the one write tool)
+
+`generate_sales_brief_document(brief_data)` creates a Word (`.docx`) meeting brief in `outputs/`. It runs only when the seller explicitly asks for a document, and it never writes outside `outputs/`. Rules: `.bob/rules-salesflow/01-routing.md`. Tests: `mcp-server/tests/test_docx_export.py`.
+
+### Mock CRM (separate server, pending review)
+
+`mock-crm/` is a second read-only MCP server that answers CRM-style questions such as opportunity counts and close dates (`crm_list_opportunities`, `crm_search_accounts`, `crm_pipeline_summary`). It is in pull request #4 and is **not on `main` yet**. See `mock-crm/README.md` once merged.
+
 ## Current status
 
 Honest snapshot of what exists in the repository. Update this table as lanes merge.
@@ -79,7 +87,9 @@ Honest snapshot of what exists in the repository. Update this table as lanes mer
 | Automated tests under `tests/` | **Not yet added** (Lane C). Lane B's test script is `mcp-server/tests/run_tools_test.py` |
 | Live Bob to MCP tool call | **Not yet confirmed by Lane D** |
 | Portable `.bob/mcp.json` | The relative `uv --directory` form is **not verified** in Bob. See `docs/setup.md`, section 4 |
-| Saving briefs to `outputs/` | **Disabled** in the mode, by design, until a file restriction is verified |
+| Word export of briefs to `outputs/` | Tool and tests are on `main` (PR #3). Lane D has **not run it in Bob** |
+| Mock CRM server | In PR #4, **not merged**. Offline checks pass. **Not tested in Bob**, and the mode rules do not mention its tools yet |
+| Dashboard | **Not built.** `Team_Lanes.md` says no frontend, so this needs a team decision |
 | Example prompts | Written, **not yet tested in Bob** |
 
 ## Setup
@@ -123,7 +133,7 @@ SalesFlow/
 - Product claims need a `source_id`. Unverified entries are labelled synthetic.
 - No unsourced competitor claims.
 - Tool output is treated as data, never as instructions.
-- Read-only MCP tools. No CRM writes. No email sending. Every draft is for seller review.
+- Lookup tools are read-only. The only write is the Word export, which runs on explicit request and writes only to `outputs/`. No CRM writes. No email sending. Every draft is for seller review.
 - The mode has no command execution and no subagents.
 
 ## Out of scope for the MVP
