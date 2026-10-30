@@ -21,21 +21,19 @@
         {
           "role": "Director of Infrastructure",
           "name": "Synthetic Contact A",
-          "notes": "Primary technical contact. Attended the initial inquiry call. Concerned about migration risk and staff bandwidth."
+          "notes": "Primary technical contact. Concerned about migration risk and team capacity."
         },
         {
-          "role": "Chief Information Officer",
+          "role": "VP of Clinical Operations",
           "name": "Synthetic Contact B",
-          "notes": "Economic buyer suspected but not confirmed. Has not been on any call yet."
+          "notes": "Focused on uptime and patient care continuity during any transition."
         }
       ],
       "notes": [
-        "2026-09-15: Initial inquiry received via web form. Director of Infrastructure requested information on storage modernisation options. No formal RFP issued.",
-        "2026-10-10: Introductory call held with Director of Infrastructure. Confirmed end-of-support concern and HA requirement. No budget figure shared. Agreed to schedule a discovery meeting."
+        "2026-09-15: Initial discovery call. Confirmed end-of-support concern and HA requirement.",
+        "2026-10-01: Follow-up. Shared high-level storage architecture options; customer requested technical deep dive."
       ],
-      "post_meeting_notes": [
-        "2026-10-29: Discovery meeting held. Director of Infrastructure confirmed storage arrays reach end of support in Q2 2027. Medical imaging workloads identified as the highest-capacity consumer. Recovery time target of four hours stated explicitly. Budget discussion deferred — Director said CIO approval is needed for capital spend above a threshold they did not specify. Agreed next step: technical deep-dive session with the infrastructure team. Action: seller to send a summary and propose deep-dive date."
-      ],
+      "post_meeting_notes": [],
       "unknowns": [
         "budget",
         "decision maker",
@@ -52,6 +50,46 @@
       "days_in_stage": 15,
       "unresolved_requirements": [],
       "value": 150000.0
+    },
+    {
+      "opportunity_id": "opp_meridian_backup_01",
+      "account_id": "acct_meridian_bank",
+      "synthetic": true,
+      "name": "Meridian Financial Services backup modernisation",
+      "stage": "Qualification",
+      "requirements": [
+        "Replace aging backup infrastructure that cannot meet current retention SLAs",
+        "Near-zero RPO and sub-one-hour RTO for core banking systems",
+        "Data residency controls and tamper-proof audit trails for regulatory reporting"
+      ],
+      "stakeholders": [
+        {
+          "role": "VP of Technology Operations",
+          "name": "Synthetic Contact C",
+          "notes": "Main contact. Owns the backup and recovery infrastructure team."
+        }
+      ],
+      "notes": [
+        "2026-10-05: Discovery call with VP of Technology Operations. Confirmed backup infrastructure is 7 years old and failing SLA targets. Regulatory deadline mentioned but date not confirmed. Budget authority unclear — VP said it depends on project size."
+      ],
+      "post_meeting_notes": [],
+      "unknowns": [
+        "budget and approval threshold",
+        "specific regulatory deadline",
+        "economic buyer",
+        "current backup tooling and architecture details"
+      ],
+      "source_id": "src_crm_opp_meridian_001",
+      "seller": "Alice",
+      "close_date": "2027-02-28",
+      "last_activity_days": 24,
+      "budget_confirmed": null,
+      "decision_maker_identified": null,
+      "next_meeting_scheduled": false,
+      "stalled": false,
+      "days_in_stage": 24,
+      "unresolved_requirements": ["regulatory deadline", "economic buyer"],
+      "value": 200000.0
     },
     {
       "opportunity_id": "opp_healthy_01",
@@ -72,6 +110,7 @@
       "notes": [
         "Proposal delivered; positive client feedback received last week."
       ],
+      "post_meeting_notes": [],
       "unknowns": [],
       "source_id": "src_crm_opp_global_002",
       "seller": "Alice",
@@ -104,6 +143,7 @@
       "notes": [
         "Meeting held 45 days ago; client went unresponsive after follow-up email."
       ],
+      "post_meeting_notes": [],
       "unknowns": [],
       "source_id": "src_crm_opp_apex_003",
       "seller": "Bob",
@@ -136,6 +176,7 @@
       "notes": [
         "Final security contract review ongoing; close date slipped past target."
       ],
+      "post_meeting_notes": [],
       "unknowns": [],
       "source_id": "src_crm_opp_summit_004",
       "seller": "Alice",
@@ -167,6 +208,7 @@
       "notes": [
         "Inbound lead; initial contact made 4 days ago."
       ],
+      "post_meeting_notes": [],
       "unknowns": [
         "budget",
         "decision maker"
@@ -177,9 +219,9 @@
       "last_activity_days": 4,
       "budget_confirmed": null,
       "decision_maker_identified": null,
-      "next_meeting_scheduled": true,
+      "next_meeting_scheduled": false,
       "stalled": false,
-      "days_in_stage": 3,
+      "days_in_stage": 4,
       "unresolved_requirements": [],
       "value": 50000.0
     }

@@ -94,7 +94,9 @@ Over real stdio (same launch path Bob uses): connect a `fastmcp.Client` with `St
 
 In Bob: ask in chat, for example "Call the SalesFlow get_account_profile tool for Acme Healthcare". Expected: `account_id` `acct_acme_healthcare`, industry Healthcare. Then "get_opportunity_context for acct_acme_healthcare": expected `opp_acme_storage_01`, stage Discovery, unknowns budget / decision maker / usable capacity.
 
-Tools: `ping`, `get_account_profile(company_name)`, `get_opportunity_context(account_id)`, `search_product_knowledge(query)`, `get_sales_playbook(topic)`.
+Tools: `ping`, `get_account_profile(company_name)`, `get_opportunity_context(account_id)`, `search_product_knowledge(query)`, `get_sales_playbook(topic)`, plus the risk, meeting-analysis, comparison and scheduling tools in the contract.
+
+Scheduled pipeline briefings need a second, separate process (`uv run salesflow-scheduler run`) because the stdio MCP server only lives as long as Bob keeps it. Setup, demo and lifecycle: [`docs/scheduled-briefings.md`](scheduled-briefings.md).
 
 ## 6. Common connection failures
 
