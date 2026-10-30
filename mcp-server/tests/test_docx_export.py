@@ -492,15 +492,17 @@ async def test_original_tools_regression() -> None:
                raw.get("status") in ("ok", "not_found"),
                f"status={raw.get('status')}")
 
-        # Tool count: should be 16 (5 original + 1 export + 2 risk + 2 meeting + 1 comparison + 5 scheduling)
+        # Tool count: should be 18 (5 original + 2 Word export + 2 risk + 2 meeting + 1 comparison
+        # + 5 scheduling + 1 report save)
         tools = sorted(t.name for t in await c.list_tools())
         expected = sorted(["ping", "get_account_profile", "get_opportunity_context",
                            "search_product_knowledge", "get_sales_playbook",
-                           "generate_sales_brief_document", "get_at_risk_deals", "get_pipeline_summary",
+                           "generate_sales_brief_document", "generate_sales_document",
+                           "get_at_risk_deals", "get_pipeline_summary",
                            "analyze_meeting_notes", "propose_crm_updates", "compare_solutions",
                            "create_pipeline_schedule", "list_pipeline_schedules", "update_pipeline_schedule",
-                           "run_pipeline_review", "get_latest_pipeline_digest"])
-        record("regression tool list (16 tools)", tools == expected, str(tools))
+                           "run_pipeline_review", "get_latest_pipeline_digest", "save_salesflow_report"])
+        record("regression tool list (18 tools)", tools == expected, str(tools))
 
 
 # ---------------------------------------------------------------------------

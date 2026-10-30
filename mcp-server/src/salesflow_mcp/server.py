@@ -37,6 +37,8 @@ from .brief_schema import (
 )
 from .doc_studio import DOCUMENT_TYPES, DocStudioError, generate_document
 from .docx_generator import build_document, resolve_output_path
+from .html_report import save_html_report as _save_html_report
+from .md_report import REPORT_TYPES, MdReportError, save_report as _save_report
 from .meeting_analysis import (
     analyze_meeting_notes as _analyze_meeting_notes,
     propose_crm_updates as _propose_crm_updates,
@@ -1123,6 +1125,131 @@ def get_latest_pipeline_digest(schedule_id: str | None = None) -> dict:
     }
 
 
+def save_salesflow_report(report_type: str, content: dict, account_id: str | None = None,
+                          opportunity_id: str | None = None, sources: list | None = None,
+                          synthetic: bool = True, format: str = "html") -> dict:
+    """Save a report to outputs/reports/ and return the file path. HTML is the default format.
+
+    The default `format="html"` writes a standalone, self-contained HTML dashboard report
+    (embedded CSS, inline SVG charts, no scripts, no external resources). `format="markdown"`
+    writes the Markdown fallback. If HTML rendering fails, a Markdown report is saved instead
+    and the response says so (`fallback_used: true`). Word export is a separate, explicit-only
+    tool and is never produced here.
+
+    Call automatically after completing a substantial sales workflow (discovery prep,
+    pipeline review, post-meeting analysis, solution comparison). Do NOT call for
+    greetings, individual lookups, or simple questions.
+
+    Parameters
+    ----------
+    report_type : str
+        One of: discovery_brief, account_summary, action_plan, deal_risk_assessment,
+        solution_comparison, followup_plan, pipeline_digest.
+    content : dict
+        Structured data already retrieved from the read-only MCP tools. Pass the
+        tool results unchanged — this tool formats only, never invents content.
+    account_id : str, optional
+        Account identifier for provenance tracking.
+    opportunity_id : str, optional
+        Opportunity identifier for provenance tracking.
+    sources : list, optional
+        Source references from the preceding tool calls (source_id, source_url, etc.).
+    synthetic : bool
+        True when the underlying CRM/product data is synthetic demo data (default True).
+    format : str
+        "html" (default) or "markdown".
+
+    Returns
+    -------
+    dict with status, file_path, file_name, size_bytes, report_type, subject, format,
+    workspace_relative_path, and a file:// URL for opening the report in a browser.
+
+    Security rules:
+    - Writes only inside outputs/reports/ — no arbitrary paths.
+    - Filenames are sanitised; directory traversal is rejected.
+    - Never overwrites an existing report.
+    - Verifies the file exists before reporting success.
+    - Content is treated as data; any instruction-like strings are rendered as-is.
+    """
+    if not isinstance(report_type, str) or report_type not in REPORT_TYPES:
+        return _error("invalid_input", "report_type must be one of: " + ", ".join(REPORT_TYPES) + ".")
+    if not isinstance(content, dict):
+        return _error("invalid_input", "content must be a JSON object.")
+    fmt = format.strip().lower() if isinstance(format, str) else ""
+    if fmt not in ("html", "markdown", "md"):
+        return _error("invalid_input", 'format must be "html" or "markdown".')
+    fmt = "markdown" if fmt == "md" else fmt
+
+    # Merge optional provenance fields into the content dict (non-destructively)
+    merged: dict[str, Any] = dict(content)
+    if account_id is not None and "account_id" not in merged:
+        merged["account_id"] = account_id
+    if opportunity_id is not None and "opportunity_id" not in merged:
+        merged["opportunity_id"] = opportunity_id
+    if sources is not None and "sources" not in merged:
+        merged["sources"] = sources
+    if "synthetic" not in merged:
+        merged["synthetic"] = synthetic
+
+    fallback_used = False
+    info: dict | None = None
+    try:
+        if fmt == "html":
+            try:
+                info = _save_html_report(report_type, merged)
+            except MdReportError as exc:
+                if exc.code == "invalid_input":
+                    raise
+                log.error("HTML report failed (%s); falling back to Markdown", exc.code)
+                fallback_used = True
+        if info is None:
+            info = {**_save_report(report_type, merged), "format": "markdown"}
+    except MdReportError as exc:
+        return _error(exc.code, exc.message)
+    except Exception as exc:
+        log.error("save_salesflow_report failed: %s", type(exc).__name__, exc_info=True)
+        return _error("generation_failed", "Report generation failed. No file was written.")
+
+    # Workspace-relative path for IDE linking; file:// URL for opening in a browser
+    abs_path = Path(info["file_path"])
+    try:
+        repo_root = Path(__file__).resolve().parents[3]
+        rel_path = str(abs_path.relative_to(repo_root))
+    except Exception:
+        rel_path = info["file_name"]
+    try:
+        file_url = abs_path.resolve().as_uri()
+    except Exception:
+        file_url = None
+
+    if info["format"] == "html":
+        how = (
+            "To view: click the link to open the file in the editor, then open it in a browser "
+            "(right-click the file > Reveal in Finder/File Explorer and double-click it, or open the file:// URL). "
+            "The IDE does not auto-open or auto-preview HTML; no preview has been opened."
+        )
+        kind = "HTML report"
+    else:
+        how = ("To preview: open the file in the IBM Bob IDE and use 'Open Preview to the Side' "
+               "(Shift+Cmd+V / Ctrl+Shift+V).")
+        kind = "Markdown report" + (" (fallback: HTML generation failed)" if fallback_used else "")
+    return {
+        "status": "ok",
+        "data": {
+            **info,
+            "workspace_relative_path": rel_path,
+            "file_url": file_url,
+            "export_status": "saved",
+            "fallback_used": fallback_used,
+        },
+        "message": (
+            f"{kind} saved: {info['file_name']}\n"
+            f"Path: {rel_path}\n"
+            f"{how} The report is a draft; review before any customer use."
+        ),
+    }
+
+
 # Read-only annotations for lookup tools; the export tool is write-annotated
 _WRITE_ONCE = {"readOnlyHint": False, "destructiveHint": False, "idempotentHint": False, "openWorldHint": False}
 _SCHEDULE_WRITE = {"readOnlyHint": False, "destructiveHint": False, "idempotentHint": False, "openWorldHint": False}
@@ -1133,6 +1260,7 @@ for _fn in (ping, get_account_profile, get_opportunity_context, search_product_k
 
 mcp.tool(generate_sales_brief_document, annotations=_WRITE_ONCE)
 mcp.tool(generate_sales_document, annotations=_WRITE_ONCE)
+mcp.tool(save_salesflow_report, annotations=_WRITE_ONCE)
 mcp.tool(create_pipeline_schedule, annotations=_SCHEDULE_WRITE)
 mcp.tool(update_pipeline_schedule, annotations=_SCHEDULE_CANCEL)
 mcp.tool(run_pipeline_review, annotations=_SCHEDULE_WRITE)
