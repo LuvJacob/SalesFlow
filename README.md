@@ -77,27 +77,6 @@ Limits, stated plainly: a local scheduler only runs while the host machine and t
 ### Mock CRM (separate server, pending review)
 
 `mock-crm/` is a second read-only MCP server that answers CRM-style questions such as opportunity counts and close dates (`crm_list_opportunities`, `crm_search_accounts`, `crm_pipeline_summary`). It is in pull request #4 and is **not on `main` yet**. See `mock-crm/README.md` once merged.
-
-## Current status
-
-Honest snapshot of what exists in the repository. Update this table as lanes merge.
-
-| Item | Status |
-|---|---|
-| SalesFlow custom mode (`read` and `mcp` groups only) | In the repo. Selection in Bob IDE: **not yet confirmed by Lane D** |
-| Rule files: routing, SPIN, grounding and safety, templates | In the repo |
-| MCP server with four tools plus `ping` | In the repo. Lane B reports 22 offline checks in `docs/setup.md`; Lane D has **not re-run them** |
-| Acme Healthcare account, opportunity, and one product | In the repo (one synthetic record each) |
-| Additional accounts and a larger product catalog | **Not yet added** (Lane C) |
-| Playbook data (`data/playbooks/*.json`) | **Not yet added** (Lane C). Until then `get_sales_playbook` returns `not_found` |
-| Automated tests under `tests/` | **Not yet added** (Lane C). Lane B's test script is `mcp-server/tests/run_tools_test.py` |
-| Live Bob to MCP tool call | **Not yet confirmed by Lane D** |
-| Portable `.bob/mcp.json` | The relative `uv --directory` form is **not verified** in Bob. See `docs/setup.md`, section 4 |
-| Word export of briefs to `outputs/` | Tool and tests are on `main` (PR #3). Lane D has **not run it in Bob** |
-| Mock CRM server | In PR #4, **not merged**. Offline checks pass. **Not tested in Bob**, and the mode rules do not mention its tools yet |
-| Dashboard | **Not built.** `Team_Lanes.md` says no frontend, so this needs a team decision |
-| Example prompts | Written, **not yet tested in Bob** |
-
 ## Setup
 
 Use the verified procedure in [`docs/setup.md`](docs/setup.md), written by Lane B. In short:
