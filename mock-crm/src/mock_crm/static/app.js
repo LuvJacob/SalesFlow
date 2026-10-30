@@ -222,10 +222,45 @@ for (const th of document.querySelectorAll("th[data-sort]")) {
   });
 }
 
+const NAV_TARGETS = {
+  dashboard: () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  },
+  pipeline: () => {
+    const target = $("section-pipeline");
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      target.classList.remove("section-highlight");
+      void target.offsetWidth;
+      target.classList.add("section-highlight");
+    }
+  },
+  accounts: () => {
+    const target = $("section-accounts");
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "center" });
+      target.classList.remove("section-highlight");
+      void target.offsetWidth;
+      target.classList.add("section-highlight");
+    }
+  },
+  "ai-insights": () => {
+    const target = $("section-copilot") || $("section-ai-banner");
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "center" });
+      target.classList.remove("section-highlight");
+      void target.offsetWidth;
+      target.classList.add("section-highlight");
+    }
+  },
+};
+
 for (const btn of document.querySelectorAll(".nav-item")) {
   btn.addEventListener("click", () => {
     for (const b of document.querySelectorAll(".nav-item")) b.classList.remove("active");
     btn.classList.add("active");
+    const tab = btn.dataset.tab;
+    if (NAV_TARGETS[tab]) NAV_TARGETS[tab]();
   });
 }
 

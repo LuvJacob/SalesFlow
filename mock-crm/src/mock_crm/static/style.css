@@ -62,6 +62,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   background-color: var(--bg-deep);
@@ -511,6 +515,20 @@ h1, h2, h3, h4, p {
   border-color: var(--border-glass-hover);
   box-shadow: var(--shadow-glass-lg), var(--inset-light);
   transform: translateY(-2px);
+}
+
+.section-highlight {
+  animation: pulseGlow 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 2px var(--ibm-cyan-light), 0 0 24px rgba(8, 189, 186, 0.45);
+    border-color: var(--ibm-cyan-light);
+  }
+  100% {
+    box-shadow: var(--shadow-glass), var(--inset-light);
+  }
 }
 
 /* KPI Cards Grid */
