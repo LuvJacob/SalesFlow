@@ -46,6 +46,45 @@
       "source_id": "src_crm_meridian_001"
     },
     {
+      "account_id": "acct_crestview_logistics",
+      "name": "Crestview Logistics",
+      "synthetic": true,
+      "industry": "Logistics and Supply Chain",
+      "overview": "Fictional mid-size logistics company managing warehouse, fleet, and last-mile delivery operations across five regional distribution centres. Runs ERP, warehouse management, and telematics systems.",
+      "challenges": [
+        "Rapid data growth from IoT sensors and telematics across the fleet",
+        "Lack of a centralised backup strategy — each site manages its own storage independently",
+        "Recent ransomware incident at a peer company has raised board-level concern about resilience"
+      ],
+      "unknowns": [
+        "Total data volumes across all sites",
+        "Whether IT decisions are centralised or made per site",
+        "Budget authority and approval process",
+        "Current backup tools and retention policies at each site",
+        "Timeline and urgency — no confirmed project start date"
+      ],
+      "source_id": "src_crm_crestview_001"
+    },
+    {
+      "account_id": "acct_nova_research",
+      "name": "Nova Research Institute",
+      "synthetic": true,
+      "industry": "Research and Higher Education",
+      "overview": "Fictional academic research institute affiliated with a university. Runs large-scale compute and storage for genomics, climate modelling, and materials science workloads. Operates a mix of on-premises HPC storage and cloud-based archival.",
+      "challenges": [
+        "Storage capacity growing faster than budget — requires cost-efficient scale-out",
+        "Long-term data retention requirements for grant compliance (7–10 years)",
+        "Inconsistent data protection across research groups — no unified backup policy"
+      ],
+      "unknowns": [
+        "Grant funding cycles and capital availability",
+        "Whether a procurement framework or preferred vendor list applies",
+        "Total data under management across all research groups",
+        "Internal technical sponsor"
+      ],
+      "source_id": "src_crm_nova_001"
+    },
+    {
       "account_id": "acct_global_logistics",
       "name": "Global Logistics",
       "synthetic": true,
@@ -93,7 +132,10 @@
       "challenges": [
         "High storage latencies in test environment"
       ],
-      "unknowns": ["annual IT budget", "total usable storage capacity"],
+      "unknowns": [
+        "annual IT budget",
+        "total usable storage capacity"
+      ],
       "source_id": "src_crm_nova_005"
     }
   ]

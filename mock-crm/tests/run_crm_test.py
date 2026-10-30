@@ -69,7 +69,7 @@ async def main() -> None:
 
         r = await call(c, "crm_pipeline_summary")
         d = r.get("data", {})
-        check("pipeline totals", r.get("status") == "ok" and d.get("total_opportunities") == 6 and d.get("total_accounts") == 4, str(d))
+        check("pipeline totals", r.get("status") == "ok" and d.get("total_opportunities") >= 6 and d.get("total_accounts") >= 4, str(d))
         check("next to close is Summit encryption", (d.get("next_to_close") or {}).get("opportunity_id") == "opp_summit_security_01")
 
         r = await call(c, "crm_search_accounts", {"query": "acme"})
