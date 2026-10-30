@@ -146,3 +146,22 @@ Digest structure: `summary` (active deals analysed, total value, flagged count/v
 
 - Lane C to confirm or adjust the playbook fixture schema above and deliver `data/playbooks/*.json`.
 - Exact tool identifiers as exposed in Bob IDE (Lanes A and B): confirm after restarting the server in Bob.
+
+## `save_salesflow_report` (write-once, local files only)
+
+Saves a seller-ready report under `outputs/reports/`. Called automatically by Bob after substantial workflows.
+
+| Argument | Notes |
+|---|---|
+| `report_type` | `discovery_brief`, `account_summary`, `action_plan`, `deal_risk_assessment`, `solution_comparison`, `followup_plan`, `pipeline_digest` |
+| `content` | Structured tool results, passed unchanged (formatting only; nothing is invented) |
+| `account_id`, `opportunity_id`, `sources`, `synthetic` | Optional provenance |
+| `format` | `"html"` (default) or `"markdown"` |
+
+- **HTML** (default): one standalone file with embedded CSS and inline SVG charts. No JavaScript, external stylesheets, fonts, images or CDN. A restrictive Content-Security-Policy meta tag is embedded. Light and dark themes (system default plus an Auto/Light/Dark toggle that needs no script).
+- **Security**: all data is HTML-escaped; product/source links render only when they are `https` URLs on `ibm.com` (otherwise "Link unavailable"); instruction-like text in data is shown as inert text.
+- **Fallback**: if HTML rendering fails, a Markdown report is saved and the response sets `fallback_used: true`.
+- **Never** overwrites (collision-resistant ASCII filenames), never writes outside `outputs/reports/`, never writes Word files, never modifies the CRM or schedules.
+- Returns `file_path`, `file_name`, `workspace_relative_path`, `file_url`, `format`, `size_bytes`, `fallback_used`.
+- **Preview**: Bob has no documented tool to open an HTML file in an embedded preview or browser, so the response never claims one opened. The seller opens the linked file and then opens it in a browser.
+- Word export remains separate and explicit-only (`generate_sales_brief_document`, `generate_sales_document`).

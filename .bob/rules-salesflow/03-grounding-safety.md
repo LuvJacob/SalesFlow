@@ -69,10 +69,11 @@ Label every substantive customer or product statement in a deliverable.
 
 ## 10. File saving
 
-- This mode has no edit permission. Never write files yourself.
-- The only way to create a file is the `generate_sales_brief_document` MCP tool, which writes a Word document to `outputs/`. Use it only when the seller explicitly asks for a document or export, as described in `01-routing.md`. Report the file name it returns.
-- If the tool is unavailable or returns an error, say so and give the content in chat.
-- The same rules apply to the document: grounded content only, evidence labels, and the draft marker.
+- This mode has no direct edit permission. Never write files yourself.
+- **Automatic HTML reports**: Use `save_salesflow_report` automatically after substantial workflows (see `01-routing.md`). It defaults to a standalone HTML file (Markdown is the fallback), writes to `outputs/reports/` only, never overwrites, escapes all data, and verifies existence. After a successful HTML save, provide the workspace-relative link and open instructions in chat (see `01-routing.md` for the full procedure). Never claim live IBM documentation was retrieved; product links come from the catalog.
+- **Word document export**: Use `generate_sales_brief_document` or `generate_sales_document` ONLY when the seller explicitly asks. They write to `outputs/` only. Do NOT auto-export Word files.
+- If any file tool is unavailable or returns an error, say so and give the content in chat instead.
+- All generated files carry grounded content only, evidence labels, and the draft marker.
 
 ## 11. Self-check before every deliverable
 

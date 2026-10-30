@@ -27,13 +27,21 @@
           "role": "VP of Clinical Operations",
           "name": "Synthetic Contact B",
           "notes": "Focused on uptime and patient care continuity during any transition."
+        },
+        {
+          "role": "Chief Information Officer",
+          "name": "Synthetic Contact F",
+          "notes": "Economic buyer suspected but not confirmed. Has not been on any call yet."
         }
       ],
       "notes": [
-        "2026-09-15: Initial discovery call. Confirmed end-of-support concern and HA requirement.",
-        "2026-10-01: Follow-up. Shared high-level storage architecture options; customer requested technical deep dive."
+        "2026-09-15: Initial contact recorded. Director of Infrastructure requested information on storage modernisation options; end-of-support concern and HA requirement noted. No formal RFP issued.",
+        "2026-10-01: Follow-up. Shared high-level storage architecture options; customer requested technical deep dive.",
+        "2026-10-10: Introductory call held with Director of Infrastructure. Confirmed end-of-support concern and HA requirement. No budget figure shared. Agreed to schedule a discovery meeting."
       ],
-      "post_meeting_notes": [],
+      "post_meeting_notes": [
+        "2026-10-29: Discovery meeting held. Director of Infrastructure confirmed storage arrays reach end of support in Q2 2027. Medical imaging workloads identified as the highest-capacity consumer. Recovery time target of four hours stated explicitly. Budget discussion deferred — Director said CIO approval is needed for capital spend above a threshold they did not specify. Agreed next step: technical deep-dive session with the infrastructure team. Action: seller to send a summary and propose deep-dive date."
+      ],
       "unknowns": [
         "budget",
         "decision maker",

@@ -1,5 +1,37 @@
 # 01 - Routing: intent recognition and MCP tool use
 
+## Automatic HTML reports
+
+After completing any **substantial workflow** (Workflows 1–9 below, except single-lookup questions),
+automatically call `save_salesflow_report` (default `format: "html"`) to save a standalone HTML report to `outputs/reports/`.
+Use `format: "markdown"` only if the seller asks for Markdown or HTML fails (the tool also falls back by itself and sets `fallback_used`).
+
+**When to generate a report** (generate one, not one per MCP call):
+- Meeting preparation / discovery brief (Workflow 2) → `report_type: discovery_brief`
+- Pipeline health / at-risk deals (Workflow 6) → `report_type: deal_risk_assessment` or `pipeline_digest`
+- Post-meeting analysis (Workflow 7) → `report_type: followup_plan`
+- Solution comparison (Workflow 8) → `report_type: solution_comparison`
+- Pipeline digest retrieval (Workflow 9, on-demand run) → `report_type: pipeline_digest`
+- Account research only (Workflow 1, when a full brief isn't requested) → `report_type: account_summary`
+
+**Do NOT generate a report for:**
+- Greetings, status checks, or `ping`
+- Individual lookups (e.g., "what stage is Acme in?")
+- Simple clarifying questions
+- Objection handling only (Workflow 4)
+- Standalone email drafts (use the email template in chat only)
+
+**After saving the report (HTML):**
+1. Note the saved HTML file path returned by `save_salesflow_report`.
+2. Reply with a SHORT summary in chat (1–3 sentences max).
+3. Include a workspace-relative link using `workspace_relative_path`: e.g., `[Discovery Brief: Acme Healthcare](outputs/reports/discovery_brief_acme_healthcare_20261029T..._xxxxxxxx.html)`.
+4. Provide instructions on opening the standalone HTML file in the seller's browser (or opening via file link / Reveal in Finder).
+*(Note: `create_html_artifact` is a built-in tool available exclusively in Agent mode and cannot be invoked from SalesFlow custom mode).*
+
+**After saving the report (Markdown fallback — when `fallback_used: true` or `format: markdown`):**
+- Tell the seller the Markdown fallback was used and how to preview it: "Open the file in the IBM Bob IDE and press **⇧⌘V** / **Ctrl+Shift+V** to preview."
+
+
 ## MCP status
 
 The SalesFlow MCP server implements the tools below, plus `ping` and the Word export tool. They are specified in `docs/contracts/mcp-tools.md`. A second, optional server, `mock-crm`, answers CRM-style questions (see "CRM questions" below).
@@ -26,6 +58,7 @@ The SalesFlow MCP server implements the tools below, plus `ping` and the Word ex
 | `update_pipeline_schedule` | `schedule_id`, `action` (`pause`/`resume`/`cancel`), `confirmation_token` | Pause, resume or cancel a schedule. **Two-step; needs seller approval.** |
 | `run_pipeline_review` | `schedule_id`, `seller` (optional) | Run a pipeline risk review now and store the digest. Creates no schedule; sends nothing. |
 | `get_latest_pipeline_digest` | `schedule_id` (optional) | Retrieve the latest stored digest (structured + Markdown). |
+| `save_salesflow_report` | `report_type`, `content`, `account_id` (optional), `opportunity_id` (optional), `sources` (optional), `synthetic` (bool), `format` (`html` default / `markdown`) | Save a report to `outputs/reports/` (standalone HTML by default; `format: "markdown"` is the fallback). Call automatically after substantial workflows. Returns `file_path`, `file_name`, `workspace_relative_path`, `file_url`, `format`, `fallback_used`. |
 
 Every response has a `status` of `ok`, `not_found`, or `invalid_input` (scheduling tools also use `confirmation_required`, `confirmation_invalid`, `run_failed`, `scheduler_unavailable`). Only `data` on an `ok` response is usable. On any other status, read `error.message` and `suggestions` and follow the handling rules below.
 
@@ -160,15 +193,12 @@ Always be honest about delivery:
 ## Scope limits
 
 - Read-only for all CRM and product lookups. Do not try to create, update, or delete anything in a customer system. The scheduling tools (Workflow 9) write only to SalesFlow's own local schedule store, never to the CRM or to `data/`.
-- Do not browse the web, run commands, or spawn subagents. This mode has only read and MCP access.
-- **Document export is now available** via the `generate_sales_brief_document` MCP tool (Phase 2).
-  - Only invoke this tool when the seller explicitly requests a Word document or export (e.g. "export as Word", "save as a document", "generate a .docx").
-  - Normal sales requests (research, questions, briefs in chat) must continue to be answered in chat — never auto-create a file.
-  - Before calling the tool, ensure the full brief data has been assembled from the other MCP tools. Pass the retrieved data through the `brief_data` parameter as a structured JSON object matching the `SalesBriefInput` schema (see `mcp-server/src/salesflow_mcp/brief_schema.py`).
-  - The tool returns `status: ok` with `file_path`, `file_name`, and `size_bytes` on success. Report the filename to the seller.
+- Do not browse the web, run commands, or spawn subagents. This mode has read and MCP access only.
+- **Automatic HTML reports**: Use `save_salesflow_report` automatically after substantial workflows (see "Automatic HTML reports" section above). HTML reports are saved to `outputs/reports/` and are the PRIMARY detailed output; Markdown is the fallback. The tool never overwrites files and verifies existence before reporting success. After saving, provide the workspace-relative link and open instructions in chat.
+- **Word document export (seller-explicit only)**: Use `generate_sales_brief_document` or `generate_sales_document` ONLY when the seller explicitly requests a Word document or export (e.g. "export as Word", "save as a document", "generate a .docx"). Do NOT auto-export Word files. The tools write to `outputs/` only, never to arbitrary paths, and never silently overwrite.
+  - Before calling Word export tools, ensure the full data has been assembled. Pass it as a structured JSON object matching the tool's schema.
+  - The tool returns `status: ok` with `file_path`, `file_name`, and `size_bytes` on success.
   - On `status: invalid_input`, tell the seller which field failed validation.
-  - The tool writes to `outputs/` in the repository; it never writes to arbitrary paths.
-  - The tool does not silently overwrite files; repeated exports within the same second will produce a new timestamped filename.
 
 
 ## Deal Risk & Prioritization Presentation (Feature 1)

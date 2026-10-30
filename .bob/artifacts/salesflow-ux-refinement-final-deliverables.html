@@ -1,0 +1,173 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>SalesFlow UX Refinement — Final Deliverables</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, "Segoe UI", system-ui, sans-serif; font-size: 14px; line-height: 1.6; background: #ffffff; color: #1f2328; padding: 32px 20px; }
+.wrap { max-width: 760px; margin: 0 auto; }
+h1 { font-size: 20px; font-weight: 700; margin-bottom: 4px; color: #1f2328; }
+.subtitle { color: #57606a; font-size: 13px; margin-bottom: 28px; }
+h2 { font-size: 15px; font-weight: 700; margin: 28px 0 10px; color: #1f2328; border-bottom: 1px solid #e5e7eb; padding-bottom: 6px; }
+h3 { font-size: 13px; font-weight: 600; margin: 16px 0 6px; color: #1f2328; }
+p { margin-bottom: 10px; }
+ul, ol { margin: 0 0 10px 20px; }
+li { margin-bottom: 3px; }
+code { background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 3px; padding: 1px 5px; font-size: 12px; font-family: ui-monospace, monospace; }
+pre { background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 4px; padding: 12px; overflow-x: auto; margin-bottom: 12px; font-size: 12px; font-family: ui-monospace, monospace; white-space: pre-wrap; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 13px; }
+th { background: #f7f8fa; text-align: left; padding: 7px 10px; border: 1px solid #e5e7eb; font-weight: 600; }
+td { padding: 6px 10px; border: 1px solid #e5e7eb; vertical-align: top; }
+tr:nth-child(even) td { background: #fafbfc; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+.pass { background: #dafbe1; color: #1a7f37; }
+.new { background: #ddf4ff; color: #0969da; }
+.note { background: #fff8c5; color: #6e4700; }
+.warn { background: #ffebe9; color: #cf222e; }
+.section-intro { background: #f7f8fa; border-left: 3px solid #3b82d4; padding: 10px 14px; margin-bottom: 16px; border-radius: 0 4px 4px 0; font-size: 13px; color: #57606a; }
+footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #e5e7eb; text-align: center; font-size: 12px; color: #57606a; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>SalesFlow UX Refinement — Final Deliverables</h1>
+<div class="subtitle">Automatic Markdown Reports &amp; Concise Seller Output · Completed 2026-10-29</div>
+
+
+<h2>1. Files Modified or Created</h2>
+<table>
+<tr><th>File</th><th>Type</th><th>Change</th></tr>
+<tr><td><code>mcp-server/src/salesflow_mcp/md_report.py</code></td><td><span class="badge new">NEW</span></td><td>Markdown report generator module — 7 templates, safe file writing to <code>outputs/reports/</code></td></tr>
+<tr><td><code>mcp-server/src/salesflow_mcp/server.py</code></td><td><span class="badge note">MODIFIED</span></td><td>Import of <code>md_report</code>; new <code>save_salesflow_report</code> function; registered as 18th MCP tool</td></tr>
+<tr><td><code>.bob/rules-salesflow/01-routing.md</code></td><td><span class="badge note">MODIFIED</span></td><td>Added "Automatic Markdown reports" section at top; added <code>save_salesflow_report</code> to tool table; updated scope limits</td></tr>
+<tr><td><code>.bob/rules-salesflow/03-grounding-safety.md</code></td><td><span class="badge note">MODIFIED</span></td><td>Updated §10 file saving — Markdown auto-saves vs Word explicit-only</td></tr>
+<tr><td><code>.bob/rules-salesflow/04-templates.md</code></td><td><span class="badge note">MODIFIED</span></td><td>Complete rewrite — concise output style, compact templates for all 7 report types</td></tr>
+<tr><td><code>.bob/custom_modes.yaml</code></td><td><span class="badge note">MODIFIED</span></td><td>Updated description, roleDefinition, customInstructions to include automatic Markdown behavior</td></tr>
+<tr><td><code>tests/test_md_report.py</code></td><td><span class="badge new">NEW</span></td><td>90-check test suite for the new tool — all passing</td></tr>
+<tr><td><code>outputs/reports/.gitkeep</code></td><td><span class="badge new">NEW</span></td><td>Ensures <code>outputs/reports/</code> directory is tracked in git</td></tr>
+<tr><td><code>outputs/reports/discovery_brief_acme_healthcare_*.md</code></td><td><span class="badge new">EXAMPLE</span></td><td>Example generated Discovery Meeting Brief (Acme Healthcare)</td></tr>
+<tr><td><code>outputs/reports/pipeline_digest_all_sellers_*.md</code></td><td><span class="badge new">EXAMPLE</span></td><td>Example generated Pipeline Intelligence Report with Mermaid diagram</td></tr>
+</table>
+
+
+<h2>2. New MCP Tool Signature</h2>
+<pre>save_salesflow_report(
+    report_type: str,        # discovery_brief | account_summary | action_plan |
+                             # deal_risk_assessment | solution_comparison |
+                             # followup_plan | pipeline_digest
+    content: dict,           # structured data from preceding read-only MCP tools
+    account_id: str | None,  # optional, for provenance
+    opportunity_id: str | None,
+    sources: list | None,    # source references from tool calls
+    synthetic: bool = True
+) -&gt; dict
+
+# Returns on success:
+{
+  "status": "ok",
+  "data": {
+    "file_path": "/absolute/path/to/outputs/reports/discovery_brief_acme_healthcare_20261029T...md",
+    "file_name": "discovery_brief_acme_healthcare_20261029T223948Z_ec12bb02.md",
+    "size_bytes": 2622,
+    "report_type": "discovery_brief",
+    "report_label": "Discovery Meeting Brief",
+    "subject": "Acme Healthcare",
+    "workspace_relative_path": "outputs/reports/discovery_brief_acme_..._ec12bb02.md",
+    "export_status": "saved"
+  },
+  "message": "Markdown report saved: discovery_brief_....md\nPath: outputs/reports/...\nTo preview: open the file in the IBM Bob IDE and use 'Open Preview to the Side' (⇧⌘V / Ctrl+Shift+V)."
+}</pre>
+
+
+<h2>3. Report Templates Implemented</h2>
+<table>
+<tr><th>Report Type</th><th>Key Sections</th><th>Special Features</th></tr>
+<tr><td><code>discovery_brief</code></td><td>Account Snapshot · 4 SPIN Questions · 30-min Agenda · Qualification Gaps · IBM Products · Next Steps · Sources</td><td>Exactly 4 SPIN (one per type) · Gaps as short labels · Product table with official IBM URLs only</td></tr>
+<tr><td><code>pipeline_digest</code> / <code>deal_risk_assessment</code></td><td>Pipeline Metrics · Risk Distribution · Top 3 At-Risk Opportunities · Key Priorities · Disclaimer</td><td><strong>Mermaid pie chart preserved</strong> · No repeated paragraphs below chart</td></tr>
+<tr><td><code>followup_plan</code></td><td>Meeting Summary · Action Items · Follow-up Email Draft · Proposed CRM Changes · Remaining Unknowns</td><td>DRAFT marker · No invented owners/deadlines · CRM "not yet applied" note</td></tr>
+<tr><td><code>solution_comparison</code></td><td>Recommendation Summary · Comparison Matrix · Top 2 Products · Validation Gaps · Sources</td><td>Official IBM product links · No guessed URLs · Gap labels only</td></tr>
+<tr><td><code>account_summary</code></td><td>Overview · Opportunities · Risk Posture</td><td>Compact, no duplication</td></tr>
+<tr><td><code>action_plan</code></td><td>Action Table · Open Items</td><td>Short labels for unknowns</td></tr>
+</table>
+
+
+<h2>4. Test Results</h2>
+<div class="section-intro">All tests run via <code>uv run python tests/test_md_report.py</code> from the mcp-server directory.</div>
+<table>
+<tr><th>Suite</th><th>Checks</th><th>Result</th></tr>
+<tr><td>Markdown report module (<code>test_md_report.py</code>)</td><td>90</td><td><span class="badge pass">90/90 PASS</span></td></tr>
+<tr><td>Data integrity regression (<code>data_integrity.py</code>)</td><td>238</td><td><span class="badge pass">238/238 PASS</span></td></tr>
+</table>
+<h3>Key test coverage</h3>
+<ul>
+<li>Successful Markdown creation for all 4 primary report types</li>
+<li>Correct file content (all required sections present)</li>
+<li>Exactly 4 SPIN questions (one per type) in discovery brief</li>
+<li>Qualification gaps rendered as compact labels with "(Unknown)"</li>
+<li>Product hyperlinks to official IBM pages only</li>
+<li>Mermaid pie chart preserved in pipeline reports</li>
+<li>Safe filenames (no path separators, ASCII-only, collision-resistant)</li>
+<li>No silent overwrite (two consecutive reports get different filenames)</li>
+<li>All reports written to <code>outputs/reports/</code> not root</li>
+<li>No automatic Word export (.md only)</li>
+<li>No affirmative notification claims in pipeline reports</li>
+<li>No CRM update claims in follow-up reports</li>
+<li>All 18 MCP tools registered (17 original + <code>save_salesflow_report</code>)</li>
+<li>Invalid report type and non-dict content return <code>invalid_input</code></li>
+</ul>
+
+
+<h2>5. Actual Output Paths</h2>
+<ul>
+<li><code>outputs/reports/discovery_brief_acme_healthcare_20261029T223948Z_ec12bb02.md</code> — example Discovery Brief</li>
+<li><code>outputs/reports/pipeline_digest_all_sellers_20261029T223957Z_06333086.md</code> — example Pipeline Digest with Mermaid</li>
+<li><code>outputs/reports/</code> — all future auto-generated Markdown reports land here</li>
+</ul>
+
+
+<h2>6. Markdown Preview Integration Status</h2>
+<div class="section-intro">IBM Bob IDE does not expose a programmatic API to open files or trigger Markdown preview from an MCP tool or mode instruction.</div>
+<p><strong>What works:</strong> The tool returns a <code>workspace_relative_path</code> (e.g., <code>outputs/reports/discovery_brief_...md</code>). SalesFlow includes this as a clickable link in the chat reply along with the preview instruction.</p>
+<p><strong>Seller action required (minimal):</strong></p>
+<ol>
+<li>Click the link in chat (or open the file from the Explorer sidebar)</li>
+<li>Press <strong>⇧⌘V</strong> (Mac) or <strong>Ctrl+Shift+V</strong> (Windows/Linux) for side-by-side Markdown preview</li>
+</ol>
+<p><strong>Not implemented (by design):</strong> No fragile UI automation, no IDE internal file modification. The rules explicitly document the manual two-step process.</p>
+
+
+<h2>7. IBM Product &amp; Documentation Live Retrieval Status</h2>
+<table>
+<tr><th>Question</th><th>Answer</th></tr>
+<tr><td>Does SalesFlow perform live retrieval from IBM product pages?</td><td><span class="badge warn">NO</span> — all product data comes from the static local catalog in <code>data/products.json</code></td></tr>
+<tr><td>Is the product catalog static?</td><td><span class="badge note">YES</span> — hand-curated JSON, re-read per request without server restart</td></tr>
+<tr><td>Are product URLs independently verified?</td><td>Verified entries have <code>source_url</code> (e.g., <code>https://www.ibm.com/products/flashsystem-5200</code>) and a <code>verified_date</code> in the catalog. The server never constructs or guesses URLs.</td></tr>
+<tr><td>What would live IBM retrieval require?</td><td>An IBM documentation or product API endpoint, a scheduled crawler/sync job, updated fixtures or a live retrieval MCP tool. Not implemented — would be a new feature beyond this UX refinement scope.</td></tr>
+</table>
+
+
+<h2>8. Remaining Limitations</h2>
+<ul>
+<li><strong>IDE preview:</strong> Cannot be triggered programmatically. Manual open + ⇧⌘V is the current path.</li>
+<li><strong>SalesFlow mode edit group:</strong> The <code>custom_modes.yaml</code> currently has <code>read</code> + <code>mcp</code> groups. The Markdown writing is performed by the <code>save_salesflow_report</code> MCP tool (server-side), so the edit group is not required for file writing to work. The MCP tool handles all I/O.</li>
+<li><strong>Live IBM retrieval:</strong> Not implemented. Product facts are sourced from the static local catalog only.</li>
+<li><strong>Bob IDE MCP session restart:</strong> After changing <code>server.py</code>, the MCP server must be restarted for the new tool to appear. See restart instructions below.</li>
+<li><strong><code>02-spin.md</code> quantity rule:</strong> The existing rule specifies 6–10 questions. The new rule clarifies that the <em>chat</em> shows 6–10 while the Markdown <em>report</em> shows exactly 4 (one per type). Both are correct in their context.</li>
+</ul>
+
+
+<h2>9. Bob MCP Server Restart Instructions</h2>
+<p>After modifying <code>server.py</code>, the Bob IDE MCP session must be restarted for the new <code>save_salesflow_report</code> tool to appear:</p>
+<ol>
+<li>Open the Bob IDE Command Palette (<strong>⌘⇧P</strong> / Ctrl+Shift+P)</li>
+<li>Run: <strong>MCP: Restart MCP Server</strong> → select <code>salesflow</code></li>
+<li>Alternatively, close and re-open the Bob chat panel</li>
+<li>Confirm with: ask Bob to <code>ping</code> — status should return <code>ok</code></li>
+</ol>
+
+<footer>Made with IBM Bob</footer>
+</div>
+</body>
+</html>
