@@ -1,69 +1,59 @@
 /* ==========================================================================
-   SalesFlow Executive CRM Dashboard · IBM Carbon Dark Theme
+   SalesFlow Executive CRM Dashboard · Frosted Glass UI (Glassmorphism)
+   Inspired by modern v0 Frosted Glass design system with IBM Carbon Dark Palette
    ========================================================================== */
 
 :root {
-  /* IBM Brand & Carbon Color System */
-  --ibm-blue-60: #0f62fe;
-  --ibm-blue-50: #4589ff;
-  --ibm-blue-40: #78a9ff;
-  --ibm-blue-70: #0043ce;
-  --ibm-blue-80: #002d9c;
+  /* IBM Carbon Palette & Electric Accents */
+  --ibm-blue: #0f62fe;
+  --ibm-blue-light: #4589ff;
+  --ibm-blue-glow: #78a9ff;
+  --ibm-cyan: #08bdba;
+  --ibm-cyan-light: #3ddbd9;
+  --ibm-purple: #a56eff;
+  --ibm-purple-light: #be95ff;
+  --ibm-magenta: #ee5396;
+  --ibm-green: #42be65;
+  --ibm-amber: #f1c21b;
+  --ibm-red: #fa4d56;
 
-  --ibm-cyan-40: #3ddbd9;
-  --ibm-cyan-50: #08bdba;
-  --ibm-cyan-60: #009d9a;
+  /* Frosted Glass Backgrounds & Translucent Layers */
+  --bg-deep: #0b0f14;
+  --glass-base: rgba(18, 24, 33, 0.65);
+  --glass-card: rgba(22, 30, 42, 0.55);
+  --glass-card-hover: rgba(30, 40, 56, 0.7);
+  --glass-sidebar: rgba(14, 18, 25, 0.75);
+  --glass-header: rgba(14, 18, 25, 0.8);
+  --glass-input: rgba(15, 21, 30, 0.6);
+  --glass-pill: rgba(255, 255, 255, 0.06);
 
-  --ibm-purple-50: #be95ff;
-  --ibm-purple-60: #a56eff;
-  --ibm-purple-70: #8a3ffc;
-
-  --ibm-magenta-50: #ee5396;
-  --ibm-magenta-60: #d12771;
-
-  --ibm-green-40: #42be65;
-  --ibm-green-50: #24a148;
-
-  --ibm-amber-40: #f1c21b;
-  --ibm-amber-50: #d2a106;
-
-  --ibm-red-40: #fa4d56;
-  --ibm-red-50: #da1e28;
-
-  /* Theme Surfaces & Backgrounds */
-  --bg-app: #121619;
-  --bg-sidebar: #161a1e;
-  --bg-header: rgba(22, 26, 30, 0.85);
-  --bg-card: #1c2127;
-  --bg-card-hover: #222830;
-  --bg-card-active: #1e2632;
-  --bg-input: #262c34;
-
-  /* Borders & Accents */
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-medium: rgba(255, 255, 255, 0.14);
-  --border-highlight: rgba(15, 98, 254, 0.4);
-  --border-cyan: rgba(8, 189, 186, 0.4);
+  /* Frosted Glass Borders & Inset Lighting */
+  --border-glass: rgba(255, 255, 255, 0.12);
+  --border-glass-hover: rgba(255, 255, 255, 0.22);
+  --border-glass-active: rgba(15, 98, 254, 0.5);
+  --border-glass-cyan: rgba(8, 189, 186, 0.5);
+  --inset-light: inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
 
   /* Typography Colors */
-  --text-primary: #f4f4f4;
-  --text-secondary: #c6c6c6;
-  --text-muted: #8d8d8d;
-  --text-disabled: #525252;
-  --text-inverse: #161616;
+  --text-primary: #ffffff;
+  --text-secondary: #c6cdd5;
+  --text-muted: #828e9c;
+  --text-disabled: #4e5966;
 
-  /* Elevation Shadows */
-  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.35);
-  --shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 12px rgba(15, 98, 254, 0.15);
-  --shadow-glow: 0 0 20px rgba(15, 98, 254, 0.3);
+  /* Glass Elevation Shadows */
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+  --shadow-glass-lg: 0 16px 48px 0 rgba(0, 0, 0, 0.55);
+  --shadow-glow-blue: 0 0 24px rgba(15, 98, 254, 0.28);
+  --shadow-glow-cyan: 0 0 24px rgba(8, 189, 186, 0.25);
 
-  /* Radius & Spacing */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 18px;
+  /* Radius & Transitions */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
   --radius-pill: 9999px;
-  --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --blur-amount: blur(18px) saturate(190%);
+  --transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* -------------------------------------------------------------------------- Base */
@@ -74,12 +64,20 @@
 
 body {
   margin: 0;
-  background: var(--bg-app);
+  background-color: var(--bg-deep);
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(15, 98, 254, 0.22) 0%, transparent 40%),
+    radial-gradient(circle at 85% 20%, rgba(138, 63, 252, 0.18) 0%, transparent 42%),
+    radial-gradient(circle at 50% 60%, rgba(8, 189, 186, 0.14) 0%, transparent 45%),
+    radial-gradient(circle at 20% 85%, rgba(15, 98, 254, 0.15) 0%, transparent 38%),
+    radial-gradient(circle at 80% 90%, rgba(238, 83, 150, 0.12) 0%, transparent 40%);
+  background-attachment: fixed;
   color: var(--text-primary);
   font: 14px/1.5 -apple-system, "IBM Plex Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
   overflow-x: hidden;
 }
 
@@ -104,17 +102,17 @@ h1, h2, h3, h4, p {
 .app-shell {
   display: flex;
   min-height: 100vh;
-  background: radial-gradient(circle at top right, rgba(15, 98, 254, 0.08), transparent 45%),
-              radial-gradient(circle at bottom left, rgba(8, 189, 186, 0.05), transparent 40%),
-              var(--bg-app);
 }
 
-/* -------------------------------------------------------------------------- Left Navigation Rail */
+/* -------------------------------------------------------------------------- Frosted Left Navigation Rail */
 
 .nav-rail {
   width: 240px;
-  background: var(--bg-sidebar);
-  border-right: 1px solid var(--border-subtle);
+  background: var(--glass-sidebar);
+  backdrop-filter: var(--blur-amount);
+  -webkit-backdrop-filter: var(--blur-amount);
+  border-right: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-glass);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -129,7 +127,7 @@ h1, h2, h3, h4, p {
   display: flex;
   align-items: center;
   gap: 12px;
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-glass);
 }
 
 .ibm-mark {
@@ -141,15 +139,16 @@ h1, h2, h3, h4, p {
 
 .ibm-stripe {
   height: 3px;
-  background: linear-gradient(90deg, var(--ibm-blue-60), var(--ibm-cyan-50));
+  background: linear-gradient(90deg, var(--ibm-blue), var(--ibm-cyan));
   border-radius: 1px;
+  box-shadow: 0 0 8px rgba(15, 98, 254, 0.4);
 }
 
 .rail-title {
   font-size: 17px;
   font-weight: 700;
   letter-spacing: -0.02em;
-  background: linear-gradient(120deg, #ffffff 30%, var(--ibm-blue-40) 100%);
+  background: linear-gradient(120deg, #ffffff 40%, var(--ibm-blue-glow) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -158,7 +157,7 @@ h1, h2, h3, h4, p {
   padding: 20px 12px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   flex: 1;
 }
 
@@ -180,15 +179,18 @@ h1, h2, h3, h4, p {
 }
 
 .nav-item:hover {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--text-primary);
-  border-color: var(--border-subtle);
+  border-color: var(--border-glass);
+  box-shadow: var(--inset-light);
+  transform: translateX(2px);
 }
 
 .nav-item.active {
-  background: linear-gradient(90deg, rgba(15, 98, 254, 0.18), rgba(8, 189, 186, 0.08));
-  color: var(--ibm-blue-40);
-  border-color: rgba(15, 98, 254, 0.35);
+  background: linear-gradient(90deg, rgba(15, 98, 254, 0.28), rgba(8, 189, 186, 0.12));
+  color: #ffffff;
+  border: 1px solid var(--border-glass-active);
+  box-shadow: var(--inset-light), var(--shadow-glow-blue);
   font-weight: 600;
 }
 
@@ -198,7 +200,7 @@ h1, h2, h3, h4, p {
 
 .rail-footer {
   padding: 18px 16px;
-  border-top: 1px solid var(--border-subtle);
+  border-top: 1px solid var(--border-glass);
 }
 
 .ai-status-chip {
@@ -206,26 +208,27 @@ h1, h2, h3, h4, p {
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  background: rgba(8, 189, 186, 0.08);
-  border: 1px solid rgba(8, 189, 186, 0.25);
+  background: rgba(8, 189, 186, 0.12);
+  border: 1px solid var(--border-glass-cyan);
   border-radius: var(--radius-pill);
   font-size: 11px;
   font-weight: 600;
-  color: var(--ibm-cyan-40);
+  color: var(--ibm-cyan-light);
+  box-shadow: var(--inset-light);
 }
 
 .status-dot {
   width: 7px;
   height: 7px;
-  background: var(--ibm-cyan-50);
+  background: var(--ibm-cyan);
   border-radius: 50%;
-  box-shadow: 0 0 8px var(--ibm-cyan-40);
+  box-shadow: 0 0 10px var(--ibm-cyan-light);
   animation: pulseDot 2s infinite ease-in-out;
 }
 
 @keyframes pulseDot {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.85); }
+  50% { opacity: 0.45; transform: scale(0.8); }
 }
 
 /* -------------------------------------------------------------------------- App Main Area */
@@ -237,17 +240,18 @@ h1, h2, h3, h4, p {
   min-width: 0;
 }
 
-/* -------------------------------------------------------------------------- Topbar Header */
+/* -------------------------------------------------------------------------- Frosted Topbar Header */
 
 .topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 16px 32px;
-  background: var(--bg-header);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border-subtle);
+  background: var(--glass-header);
+  backdrop-filter: var(--blur-amount);
+  -webkit-backdrop-filter: var(--blur-amount);
+  border-bottom: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-glass);
   position: sticky;
   top: 0;
   z-index: 90;
@@ -277,11 +281,12 @@ h1, h2, h3, h4, p {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  background: rgba(15, 98, 254, 0.2);
-  color: var(--ibm-blue-40);
-  padding: 2px 8px;
+  background: rgba(15, 98, 254, 0.22);
+  color: var(--ibm-blue-glow);
+  padding: 3px 9px;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(15, 98, 254, 0.4);
+  border: 1px solid var(--border-glass-active);
+  box-shadow: var(--inset-light);
 }
 
 .brand-sub {
@@ -301,7 +306,7 @@ h1, h2, h3, h4, p {
   flex-direction: column;
   align-items: flex-end;
   padding-right: 14px;
-  border-right: 1px solid var(--border-subtle);
+  border-right: 1px solid var(--border-glass);
 }
 
 .stat-lbl {
@@ -317,24 +322,25 @@ h1, h2, h3, h4, p {
 }
 
 .status-active {
-  color: var(--ibm-green-40);
+  color: var(--ibm-green);
 }
 
 .badge-synthetic {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(241, 194, 27, 0.12);
-  color: var(--ibm-amber-40);
+  background: rgba(241, 194, 27, 0.14);
+  color: var(--ibm-amber);
   border: 1px solid rgba(241, 194, 27, 0.35);
+  box-shadow: var(--inset-light);
   font-size: 12px;
   font-weight: 600;
-  padding: 5px 12px;
+  padding: 6px 14px;
   border-radius: var(--radius-pill);
 }
 
 .sparkle {
-  color: var(--ibm-amber-40);
+  color: var(--ibm-amber);
   font-size: 11px;
 }
 
@@ -347,7 +353,7 @@ h1, h2, h3, h4, p {
 .user-avatar {
   width: 32px;
   height: 32px;
-  background: linear-gradient(135deg, var(--ibm-blue-60), var(--ibm-blue-80));
+  background: linear-gradient(135deg, var(--ibm-blue), #002d9c);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -355,7 +361,8 @@ h1, h2, h3, h4, p {
   font-size: 11px;
   font-weight: 700;
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--border-glass);
+  box-shadow: 0 0 12px rgba(15, 98, 254, 0.35);
 }
 
 .user-name {
@@ -377,28 +384,33 @@ h1, h2, h3, h4, p {
 }
 
 .alert-banner {
-  background: rgba(218, 30, 40, 0.15);
-  color: var(--ibm-red-40);
+  background: rgba(218, 30, 40, 0.2);
+  backdrop-filter: var(--blur-amount);
+  -webkit-backdrop-filter: var(--blur-amount);
+  color: var(--ibm-red);
   border: 1px solid rgba(218, 30, 40, 0.4);
   border-radius: var(--radius-md);
   padding: 14px 20px;
   font-weight: 500;
   margin: 20px 32px 0;
+  box-shadow: var(--inset-light);
 }
 
-/* -------------------------------------------------------------------------- AI Banner */
+/* -------------------------------------------------------------------------- Frosted AI Banner */
 
 .ai-banner {
-  background: linear-gradient(135deg, rgba(15, 98, 254, 0.14) 0%, rgba(8, 189, 186, 0.08) 100%),
-              var(--bg-card);
-  border: 1px solid rgba(15, 98, 254, 0.35);
+  background: linear-gradient(135deg, rgba(15, 98, 254, 0.22) 0%, rgba(8, 189, 186, 0.12) 100%),
+              var(--glass-card);
+  backdrop-filter: var(--blur-amount);
+  -webkit-backdrop-filter: var(--blur-amount);
+  border: 1px solid var(--border-glass-hover);
   border-radius: var(--radius-lg);
-  padding: 22px 26px;
+  padding: 24px 28px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-glass), var(--inset-light);
   position: relative;
   overflow: hidden;
 }
@@ -410,7 +422,8 @@ h1, h2, h3, h4, p {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--ibm-blue-50), var(--ibm-cyan-40), var(--ibm-purple-50));
+  background: linear-gradient(90deg, var(--ibm-blue-light), var(--ibm-cyan-light), var(--ibm-purple-light));
+  box-shadow: 0 0 12px var(--ibm-cyan-light);
 }
 
 .ai-badge {
@@ -421,7 +434,7 @@ h1, h2, h3, h4, p {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--ibm-cyan-40);
+  color: var(--ibm-cyan-light);
   margin-bottom: 6px;
 }
 
@@ -459,9 +472,10 @@ h1, h2, h3, h4, p {
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-  padding: 6px 14px;
-  background: rgba(0, 0, 0, 0.35);
-  border: 1px solid var(--border-subtle);
+  padding: 7px 16px;
+  background: rgba(10, 15, 22, 0.55);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--inset-light);
   border-radius: var(--radius-pill);
   font-size: 12px;
 }
@@ -476,22 +490,27 @@ h1, h2, h3, h4, p {
 }
 
 .text-cyan {
-  color: var(--ibm-cyan-40);
+  color: var(--ibm-cyan-light);
 }
 
-/* -------------------------------------------------------------------------- Cards & Grids */
+/* -------------------------------------------------------------------------- Frosted Cards & Grids */
 
 .card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  background: var(--glass-card);
+  backdrop-filter: var(--blur-amount);
+  -webkit-backdrop-filter: var(--blur-amount);
+  border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
   padding: 22px 24px;
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-glass), var(--inset-light);
   transition: var(--transition);
 }
 
 .card:hover {
-  border-color: var(--border-medium);
+  background: var(--glass-card-hover);
+  border-color: var(--border-glass-hover);
+  box-shadow: var(--shadow-glass-lg), var(--inset-light);
+  transform: translateY(-2px);
 }
 
 /* KPI Cards Grid */
@@ -524,14 +543,16 @@ h1, h2, h3, h4, p {
 }
 
 .kpi-icon {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 14px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--inset-light);
 }
 
 .kpi-number {
@@ -548,7 +569,7 @@ h1, h2, h3, h4, p {
 }
 
 .kpi-trend.positive {
-  color: var(--ibm-cyan-40);
+  color: var(--ibm-cyan-light);
 }
 
 .kpi-trend.neutral {
@@ -556,8 +577,9 @@ h1, h2, h3, h4, p {
 }
 
 .kpi-card-highlight {
-  border-color: rgba(15, 98, 254, 0.4);
-  background: linear-gradient(145deg, rgba(15, 98, 254, 0.12), var(--bg-card));
+  border-color: var(--border-glass-active);
+  background: linear-gradient(145deg, rgba(15, 98, 254, 0.22), var(--glass-card));
+  box-shadow: var(--shadow-glass), var(--shadow-glow-blue), var(--inset-light);
 }
 
 .kpi-card-highlight::before {
@@ -567,16 +589,19 @@ h1, h2, h3, h4, p {
   left: 0;
   bottom: 0;
   width: 4px;
-  background: var(--ibm-blue-60);
+  background: linear-gradient(180deg, var(--ibm-blue-light), var(--ibm-cyan));
+  box-shadow: 0 0 10px var(--ibm-blue);
 }
 
 .kpi-card-highlight.soon {
-  border-color: rgba(218, 30, 40, 0.45);
-  background: linear-gradient(145deg, rgba(218, 30, 40, 0.12), var(--bg-card));
+  border-color: rgba(218, 30, 40, 0.5);
+  background: linear-gradient(145deg, rgba(218, 30, 40, 0.2), var(--glass-card));
+  box-shadow: var(--shadow-glass), 0 0 20px rgba(218, 30, 40, 0.3), var(--inset-light);
 }
 
 .kpi-card-highlight.soon::before {
-  background: var(--ibm-red-40);
+  background: var(--ibm-red);
+  box-shadow: 0 0 10px var(--ibm-red);
 }
 
 .kpi-next-name {
@@ -627,15 +652,16 @@ h1, h2, h3, h4, p {
 .card-tag {
   font-size: 11px;
   font-weight: 600;
-  padding: 3px 9px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--border-subtle);
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--inset-light);
   border-radius: var(--radius-pill);
   color: var(--text-secondary);
   white-space: nowrap;
 }
 
-/* -------------------------------------------------------------------------- Stage Chart */
+/* -------------------------------------------------------------------------- Frosted Stage Chart */
 
 .stage-chart {
   display: flex;
@@ -657,20 +683,21 @@ h1, h2, h3, h4, p {
 }
 
 .bar-track {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.35);
   border-radius: var(--radius-sm);
   height: 16px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-glass);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--ibm-blue-60), var(--ibm-cyan-50));
+  background: linear-gradient(90deg, var(--ibm-blue), var(--ibm-cyan));
   border-radius: var(--radius-sm);
   min-width: 6px;
   transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 0 10px rgba(15, 98, 254, 0.3);
+  box-shadow: 0 0 14px rgba(8, 189, 186, 0.45);
 }
 
 .stage-count {
@@ -679,7 +706,7 @@ h1, h2, h3, h4, p {
   color: #ffffff;
 }
 
-/* -------------------------------------------------------------------------- Accounts Grid */
+/* -------------------------------------------------------------------------- Frosted Accounts Grid */
 
 .accounts-grid {
   display: grid;
@@ -696,8 +723,9 @@ h1, h2, h3, h4, p {
   gap: 12px;
   width: 100%;
   text-align: left;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--inset-light);
   border-radius: var(--radius-md);
   padding: 12px 14px;
   cursor: pointer;
@@ -707,15 +735,16 @@ h1, h2, h3, h4, p {
 }
 
 .account:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--border-medium);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--border-glass-hover);
   transform: translateY(-1px);
+  box-shadow: var(--inset-light), 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .account.active {
-  background: linear-gradient(90deg, rgba(15, 98, 254, 0.22), rgba(8, 189, 186, 0.08));
-  border-color: var(--ibm-blue-60);
-  box-shadow: 0 0 12px rgba(15, 98, 254, 0.2);
+  background: linear-gradient(90deg, rgba(15, 98, 254, 0.32), rgba(8, 189, 186, 0.12));
+  border-color: var(--ibm-blue);
+  box-shadow: var(--inset-light), var(--shadow-glow-blue);
 }
 
 .account:focus-visible,
@@ -723,7 +752,7 @@ h1, h2, h3, h4, p {
 input:focus-visible,
 select:focus-visible,
 th:focus-visible {
-  outline: 2px solid var(--ibm-blue-50);
+  outline: 2px solid var(--ibm-blue-light);
   outline-offset: 2px;
 }
 
@@ -738,9 +767,10 @@ th:focus-visible {
 }
 
 .pill {
-  background: rgba(15, 98, 254, 0.25);
-  color: var(--ibm-blue-40);
-  border: 1px solid rgba(15, 98, 254, 0.45);
+  background: rgba(15, 98, 254, 0.28);
+  color: var(--ibm-blue-glow);
+  border: 1px solid var(--border-glass-active);
+  box-shadow: var(--inset-light);
   border-radius: var(--radius-pill);
   padding: 3px 10px;
   font-size: 11px;
@@ -748,7 +778,7 @@ th:focus-visible {
   white-space: nowrap;
 }
 
-/* -------------------------------------------------------------------------- Opportunities Table Section */
+/* -------------------------------------------------------------------------- Frosted Opportunities Table */
 
 .table-card {
   padding: 24px;
@@ -781,7 +811,7 @@ th:focus-visible {
 .count-pill {
   font-size: 13px;
   font-weight: 500;
-  color: var(--ibm-blue-40);
+  color: var(--ibm-blue-glow);
 }
 
 .filters-toolbar {
@@ -807,25 +837,27 @@ th:focus-visible {
 input[type="search"] {
   font: inherit;
   padding: 9px 12px 9px 36px;
-  border: 1px solid var(--border-medium);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--inset-light);
   border-radius: var(--radius-md);
-  background: var(--bg-input);
+  background: var(--glass-input);
   color: #ffffff;
   min-width: 220px;
   transition: var(--transition);
 }
 
 input[type="search"]:focus {
-  border-color: var(--ibm-blue-50);
-  box-shadow: 0 0 10px rgba(15, 98, 254, 0.25);
+  border-color: var(--ibm-blue-light);
+  box-shadow: var(--inset-light), 0 0 12px rgba(15, 98, 254, 0.4);
 }
 
 select {
   font: inherit;
   padding: 9px 14px;
-  border: 1px solid var(--border-medium);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--inset-light);
   border-radius: var(--radius-md);
-  background: var(--bg-input);
+  background: var(--glass-input);
   color: var(--text-primary);
   min-width: 140px;
   cursor: pointer;
@@ -833,7 +865,7 @@ select {
 }
 
 select:focus {
-  border-color: var(--ibm-blue-50);
+  border-color: var(--ibm-blue-light);
 }
 
 .btn {
@@ -849,15 +881,16 @@ select:focus {
 }
 
 .btn-secondary {
-  border: 1px solid var(--border-medium);
-  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: var(--inset-light);
   color: var(--text-secondary);
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.14);
   color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.25);
+  border-color: var(--border-glass-hover);
 }
 
 .btn-icon {
@@ -866,9 +899,10 @@ select:focus {
 
 .table-wrap {
   overflow-x: auto;
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--inset-light);
   border-radius: var(--radius-md);
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(10, 15, 22, 0.4);
 }
 
 table {
@@ -879,12 +913,12 @@ table {
 
 th, td {
   padding: 13px 16px;
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-glass);
   vertical-align: middle;
 }
 
 th {
-  background: #181d22;
+  background: rgba(18, 25, 35, 0.7);
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
@@ -897,19 +931,19 @@ th {
 
 th:hover {
   color: #ffffff;
-  background: #20262c;
+  background: rgba(26, 36, 50, 0.85);
 }
 
 th[aria-sort="ascending"]::after {
   content: " ▲";
   font-size: 10px;
-  color: var(--ibm-blue-40);
+  color: var(--ibm-blue-glow);
 }
 
 th[aria-sort="descending"]::after {
   content: " ▼";
   font-size: 10px;
-  color: var(--ibm-blue-40);
+  color: var(--ibm-blue-glow);
 }
 
 tbody tr {
@@ -917,7 +951,8 @@ tbody tr {
 }
 
 tbody tr:hover {
-  background: rgba(255, 255, 255, 0.035);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: var(--inset-light);
 }
 
 tbody tr:last-child td {
@@ -936,21 +971,21 @@ tbody tr:last-child td {
 }
 
 .date-sub.soon {
-  color: var(--ibm-amber-40);
+  color: var(--ibm-amber);
   font-weight: 600;
 }
 
 .date-sub.past {
-  color: var(--ibm-red-40);
+  color: var(--ibm-red);
 }
 
 .unknown {
-  color: var(--ibm-amber-40);
+  color: var(--ibm-amber);
   font-style: italic;
   opacity: 0.85;
 }
 
-/* Stage Tags */
+/* Frosted Stage Tags */
 .tag {
   display: inline-flex;
   align-items: center;
@@ -959,30 +994,31 @@ tbody tr:last-child td {
   padding: 3px 10px;
   border-radius: var(--radius-pill);
   border: 1px solid transparent;
+  box-shadow: var(--inset-light);
 }
 
 .tag-Discovery {
-  background: rgba(15, 98, 254, 0.18);
-  color: var(--ibm-blue-40);
-  border-color: rgba(15, 98, 254, 0.4);
+  background: rgba(15, 98, 254, 0.22);
+  color: var(--ibm-blue-glow);
+  border-color: var(--border-glass-active);
 }
 
 .tag-Qualification {
-  background: rgba(165, 110, 255, 0.18);
-  color: var(--ibm-purple-50);
-  border-color: rgba(165, 110, 255, 0.4);
+  background: rgba(165, 110, 255, 0.22);
+  color: var(--ibm-purple-light);
+  border-color: rgba(165, 110, 255, 0.45);
 }
 
 .tag-Proposal {
-  background: rgba(8, 189, 186, 0.18);
-  color: var(--ibm-cyan-40);
-  border-color: rgba(8, 189, 186, 0.4);
+  background: rgba(8, 189, 186, 0.22);
+  color: var(--ibm-cyan-light);
+  border-color: var(--border-glass-cyan);
 }
 
 .tag-Negotiation {
-  background: rgba(238, 83, 150, 0.18);
-  color: var(--ibm-magenta-50);
-  border-color: rgba(238, 83, 150, 0.4);
+  background: rgba(238, 83, 150, 0.22);
+  color: var(--ibm-magenta);
+  border-color: rgba(238, 83, 150, 0.45);
 }
 
 /* Empty State */
@@ -1011,11 +1047,13 @@ tbody tr:last-child td {
   color: var(--text-muted);
 }
 
-/* -------------------------------------------------------------------------- AI Copilot Action Panel */
+/* -------------------------------------------------------------------------- Frosted Copilot Action Panel */
 
 .copilot-panel {
-  background: linear-gradient(145deg, rgba(22, 26, 30, 0.95), rgba(18, 22, 25, 0.95));
-  border: 1px solid var(--border-subtle);
+  background: var(--glass-card);
+  backdrop-filter: var(--blur-amount);
+  -webkit-backdrop-filter: var(--blur-amount);
+  border: 1px solid var(--border-glass);
 }
 
 .copilot-header {
@@ -1030,16 +1068,16 @@ tbody tr:last-child td {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--ibm-blue-40);
+  color: var(--ibm-blue-glow);
   margin-bottom: 6px;
 }
 
 .pulse-ring {
   width: 6px;
   height: 6px;
-  background: var(--ibm-blue-50);
+  background: var(--ibm-blue-light);
   border-radius: 50%;
-  box-shadow: 0 0 8px var(--ibm-blue-40);
+  box-shadow: 0 0 10px var(--ibm-blue-glow);
 }
 
 .copilot-title {
@@ -1055,8 +1093,9 @@ tbody tr:last-child td {
 }
 
 .copilot-card {
-  background: rgba(255, 255, 255, 0.025);
-  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--inset-light);
   border-radius: var(--radius-md);
   padding: 14px 16px;
   display: flex;
@@ -1066,8 +1105,10 @@ tbody tr:last-child td {
 }
 
 .copilot-card:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: var(--border-medium);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: var(--border-glass-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--inset-light), 0 8px 20px rgba(0, 0, 0, 0.35);
 }
 
 .copilot-card-head {
@@ -1080,23 +1121,27 @@ tbody tr:last-child td {
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
-  padding: 2px 7px;
+  padding: 3px 8px;
   border-radius: var(--radius-pill);
+  box-shadow: var(--inset-light);
 }
 
 .action-prep {
-  background: rgba(15, 98, 254, 0.2);
-  color: var(--ibm-blue-40);
+  background: rgba(15, 98, 254, 0.25);
+  color: var(--ibm-blue-glow);
+  border: 1px solid var(--border-glass-active);
 }
 
 .action-risk {
-  background: rgba(241, 194, 27, 0.2);
-  color: var(--ibm-amber-40);
+  background: rgba(241, 194, 27, 0.25);
+  color: var(--ibm-amber);
+  border: 1px solid rgba(241, 194, 27, 0.45);
 }
 
 .action-sol {
-  background: rgba(8, 189, 186, 0.2);
-  color: var(--ibm-cyan-40);
+  background: rgba(8, 189, 186, 0.25);
+  color: var(--ibm-cyan-light);
+  border: 1px solid var(--border-glass-cyan);
 }
 
 .action-acc {
@@ -1114,20 +1159,24 @@ tbody tr:last-child td {
 .copilot-text code {
   font-family: "IBM Plex Mono", Menlo, Consolas, monospace;
   font-size: 11px;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 1px 4px;
-  border-radius: 3px;
-  color: var(--ibm-cyan-40);
+  background: rgba(0, 0, 0, 0.45);
+  padding: 2px 5px;
+  border-radius: 4px;
+  border: 1px solid var(--border-glass);
+  color: var(--ibm-cyan-light);
 }
 
-/* -------------------------------------------------------------------------- Footer */
+/* -------------------------------------------------------------------------- Frosted Footer */
 
 .app-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 20px 32px;
-  border-top: 1px solid var(--border-subtle);
+  border-top: 1px solid var(--border-glass);
+  background: var(--glass-sidebar);
+  backdrop-filter: var(--blur-amount);
+  -webkit-backdrop-filter: var(--blur-amount);
   font-size: 12px;
   color: var(--text-muted);
 }
